@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 import java.util.Scanner;
 
-//Reference from B4LecLab-LittleCalculatorStarter
+//Reference from B4LecLab-LittleCalculatorStarter - LoggingCalculator.java
 
 
 public class BudgetingApp {
@@ -18,14 +18,25 @@ public class BudgetingApp {
         System.out.println("Please enter your budget($): ");
         budget = scanner.nextInt();
         scanner.nextLine();
+        System.out.println("Your current budget is: $" + budget);
+        System.out.println("");
+
         while(true){
             LogEntry opEntry = new LogEntry();
+
             System.out.println("Please select an options:");
             System.out.println("[1] Add an amount of money");
             System.out.println("[2] Spend an amount of money");
             System.out.println("[3] Show all transactions");
             transaction = scanner.nextLine();
-            System.out.println("You have selected " + "["+  transaction + "]");
+            System.out.println("");
+            if (transaction.equals("1")){
+                System.out.println("You have selected: " + "Add an amount of money");}
+                else if (transaction.equals("2")){
+                System.out.println("You have selected: " + "Spend an amount of money");}
+                else{
+                System.out.println("You have selected: " + "Show all transactions");}
+
 
             if (transaction.equals("1")){
                 opEntry.setOperation(transaction);
@@ -41,7 +52,8 @@ public class BudgetingApp {
             else if (transaction.equals("3")){
                 break;
             }
-            System.out.println("the current budget is $" + budget);
+            System.out.println("The current budget is $" + budget);
+            System.out.println("");
             transactionLog.add(opEntry);
 
 
