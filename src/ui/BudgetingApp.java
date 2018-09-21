@@ -59,7 +59,7 @@ public class BudgetingApp {
     }
 
     private int minus (LogEntry logEntry){
-        System.out.println("Please enter the amount of money you are spending ");
+        System.out.println("Please enter the amount of money you are spending: ");
         int minusAmount = scanner.nextInt();
         scanner.nextLine();
         logEntry.addOperand(minusAmount);
