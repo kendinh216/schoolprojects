@@ -6,6 +6,9 @@ import java.util.ArrayList;
 
 import java.util.Scanner;
 
+//Reference from B4LecLab-LittleCalculatorStarter
+
+
 public class BudgetingApp {
     ArrayList<LogEntry> transactionLog = new ArrayList<>();
     Scanner scanner = new Scanner(System.in);

@@ -16,7 +16,7 @@ public class LogEntry {
     public void setBudget (Integer budget) { this.budget = budget;}
 
     public String toString() {
-        return transaction + " " + transactions + " budget is " + budget;
+        return transaction + " " + transactions + " budget is $" + budget;
     }
 
 
