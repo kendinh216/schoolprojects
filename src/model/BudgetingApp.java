@@ -1,16 +1,14 @@
-package ui;
-
-import starter.LogEntry;
+package model;
 
 import java.util.ArrayList;
-
 import java.util.Scanner;
 
 //Reference from B4LecLab-LittleCalculatorStarter - LoggingCalculator.java
 
 
+
 public class BudgetingApp {
-    ArrayList<LogEntry> transactionLog = new ArrayList<>();
+    ArrayList<TransactionEntry> transactionLog = new ArrayList<>();
     Scanner scanner = new Scanner(System.in);
     int budget = 0;
     public BudgetingApp(){
@@ -22,7 +20,7 @@ public class BudgetingApp {
         System.out.println("");
 
         while(true){
-            LogEntry opEntry = new LogEntry();
+            TransactionEntry opEntry = new TransactionEntry();
 
             System.out.println("Please select an options:");
             System.out.println("[1] Add an amount of money");
@@ -31,21 +29,21 @@ public class BudgetingApp {
             transaction = scanner.nextLine();
             System.out.println("");
             if (transaction.equals("1")){
-                System.out.println("You have selected: " + "Add an amount of money");}
-                else if (transaction.equals("2")){
+                System.out.println("You have selected: " + "Add an amount of money of money");}
+            else if (transaction.equals("2")){
                 System.out.println("You have selected: " + "Spend an amount of money");}
-                else{
+            else{
                 System.out.println("You have selected: " + "Show all transactions");}
 
 
             if (transaction.equals("1")){
-                opEntry.setOperation(transaction);
-                budget = plus(opEntry);
+                opEntry.setUserChosenOperation(transaction);
+                budget = add(opEntry);
                 opEntry.setBudget(budget);
             }
             else if (transaction.equals("2")){
-                opEntry.setOperation(transaction);
-                budget = minus(opEntry);
+                opEntry.setUserChosenOperation(transaction);
+                budget = spend(opEntry);
                 opEntry.setBudget(budget);
 
             }
@@ -62,27 +60,20 @@ public class BudgetingApp {
 
 
     }
-    private int plus (LogEntry logEntry) {
+    private int add(TransactionEntry transactionEntry) {
         System.out.println("Please enter the amount of money you want to add in: ");
         int addAmount = scanner.nextInt();
         scanner.nextLine();
-        logEntry.addOperand(addAmount);
+        transactionEntry.amountOfMoney(addAmount);
         return budget + addAmount;
     }
 
-    private int minus (LogEntry logEntry){
+    private int spend(TransactionEntry transactionEntry){
         System.out.println("Please enter the amount of money you are spending: ");
         int minusAmount = scanner.nextInt();
         scanner.nextLine();
-        logEntry.addOperand(minusAmount);
+        transactionEntry.amountOfMoney(minusAmount);
         return budget - minusAmount;
     }
-
-    public static void main(String[] args) {
-        new BudgetingApp();
-    }
-
-
-
 
 }
