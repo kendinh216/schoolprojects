@@ -21,24 +21,28 @@ public class ToDoListApp {
             System.out.println("[4] Show all items in Todo and Crossed Off lists.");
             System.out.println("[5] Quit application.");
             int userInput = scanner.nextInt();
+            scanner.nextLine();
 
             if (userInput == 1) {
                 System.out.println("Enter your todo task: ");
                 String task = scanner.nextLine();
-                scanner.nextLine();
                 toDo.add(task);
+                System.out.println("");
 
             } else if (userInput == 2) {
-                String removed = toDo.get(toDo.size() -1);
-                if (removed != null) {
-                    toDo.remove(toDo.size() -1);
-                    crossedOff.add(toDo.get(toDo.size() -1 ));
-                    System.out.println("The last item in the list: " + "(" + toDo.get(toDo.size() -1) + ")" + " is removed");
-                } else {
-                    System.out.println("The ToDo list is empty.");
+                if (toDo.size() == 0) {
+                    System.out.println("The ToDo list is empty");
+                    System.out.println("");
                 }
-
-            } else if (userInput == 3) {
+                else{
+                String removed = toDo.get(toDo.size() -1);
+                    toDo.remove(toDo.size() -1);
+                    crossedOff.add(removed);
+                    System.out.println("The last item in the list: " + "(" + removed + ")" + " is removed");
+                    System.out.println("");
+                }
+            }
+                else if (userInput == 3) {
                 System.out.println("The items to be done are: ");
                 for (int i = 0; i < toDo.size(); i ++){
                     System.out.println((i+1) + ". " + toDo.get(i) + "\n" );
@@ -54,14 +58,15 @@ public class ToDoListApp {
             }
 
             else if (userInput == 4) {
-                System.out.println("The items that are still need to do are: ");
+                System.out.println("The items that are still need to do are: " + "\n");
                 for (int i = 0; i < toDo.size(); i ++){
-                    System.out.println((i+1) + ". " + toDo.get(i) + "\n");
+                    System.out.println((i+1) + ". " + toDo.get(i));
                 }
                 System.out.println("");
-                System.out.println("The items that have been crossed off are: ");
+                System.out.println("The items that have been crossed off are: " + "\n");
                 for (int i = 0; i < crossedOff.size(); i ++){
-                    System.out.println((i+1) + ". " + crossedOff.get(i) + "\n" );
+                    System.out.println((i+1) + ". " + crossedOff.get(i));
+                    System.out.println("");
                 }
 
 
