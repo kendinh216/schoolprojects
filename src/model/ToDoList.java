@@ -5,8 +5,8 @@ import java.util.Scanner;
 
 public class ToDoList {
 
-    private static ArrayList<String> toDo = new ArrayList<>();
-    private static ArrayList<String> crossedOff = new ArrayList<>();
+    private static ArrayList<Item> toDo = new ArrayList<>();
+    //private static ArrayList<Item> crossedOff = new ArrayList<>();
 
     //MODIFIES: this
     //EFFECTS:  prints out a list of options for the user to choose from
@@ -25,59 +25,74 @@ public class ToDoList {
             String userInput = scanner.next();
             scanner.nextLine();
 
+            //Add a task
             if (userInput.equals("1")) {
                 System.out.println("Enter your todo task: ");
                 String task = scanner.nextLine();
-                toDo.add(task);
+                AddNewItemToList(task, toDo);
                 System.out.println("");
             }
+            //Delete the last item in to do list
+            //If to do list is empty then do nothing
             else if (userInput.equals("2")) {
                 if (toDo.size() == 0) {
                     System.out.println("The ToDo list is empty");
                     System.out.println("");
                 } else {
-                    String removed = toDo.get(toDo.size() - 1);
-                    toDo.remove(toDo.size() - 1);
-                    crossedOff.add(removed);
-                    System.out.println("The last item in the list: " + "(" + removed + ")" + " is removed");
+                    Item removed = toDo.get(toDo.size() - 1);
+                    removed.setItemStatus("Done");
+                    System.out.println("The last item in the list: " + "(" + removed.getItemName() + ")" + " is removed");
                     System.out.println("");
                 }
             }
+            //Cross off a specific item in the to do list
             else if (userInput.equals("3")) {
                 System.out.println("The items to be done are: ");
-                for (int i = 0; i < toDo.size(); i++) {
-                    System.out.println((i + 1) + ". " + toDo.get(i) + "\n");
-                }
+                PrintAllListItemsNames(toDo);
                 System.out.println("Enter the index of the item you want to cross off: ");
                 int index = scanner.nextInt();
-                String removed = toDo.remove(index - 1);
+                Item removed = toDo.get(index - 1);
                 if (removed != null) {
-                    System.out.println("The item " + "(" + removed + ")" + " has been crossed off.");
+                    removed.setItemStatus("DONE");
+                    System.out.println("The item " + "(" + removed.getItemName() + ")" + " has been crossed off.");
                 } else {
-                    System.out.println("There is no item at the index " + index + " to be crossed off.");
+                    System.out.println("There is no item at the index [" + index + "] to be crossed off.");
                 }
             }
-            else if (userInput.equals("4")) {
-                System.out.println("The items that are still need to do are: " + "\n");
-                for (int i = 0; i < toDo.size(); i++) {
-                    System.out.println((i + 1) + ". " + toDo.get(i));
-                }
-                System.out.println("");
-                System.out.println("The items that have been crossed off are: " + "\n");
-                for (int i = 0; i < crossedOff.size(); i++) {
-                    System.out.println((i + 1) + ". " + crossedOff.get(i));
-                    System.out.println("");
-                }
+            //Show all items in to do list with their status
+            else if (userInput.equals("4")){
+                System.out.println("The list of items you have entered are: ");
+                ShowAllListItemsNameAndStatus(toDo);
             }
+            //Ends application
             else if (userInput.equals("5")) {
                 System.out.println("Thank you for using our application.");
                 break;
             }
+            //User input wrong command so repeat the menu choices
             else {
                 System.out.println("Sorry but you have chosen an invalid option. Please choose again." +"\n");
 
             }
         }
+    }
+    //EFFECTS: prints out all items in a list with their name and status
+    public void ShowAllListItemsNameAndStatus(ArrayList<Item> array) {
+        for (int i = 0; i < array.size(); i++) {
+            System.out.println((i + 1) + ". " + array.get(i).getItemName() + " - " + array.get(i).getItemStatus() +"\n"); }
+    }
+    //EFFECTS: prints out all items in a list with their name only
+    public void PrintAllListItemsNames(ArrayList<Item> array) {
+        for (int i = 0; i < array.size(); i++) {
+            System.out.println((i + 1) + ". " + array.get(i).getItemName() + "\n");
+        }
+    }
+
+    //MODIFIES: this
+    //EFFECTS:  add new item to a list of items
+    public void AddNewItemToList(String task, ArrayList<Item> array) {
+        Item newItem = new Item(task, "NOT DONE");
+        array.add(newItem);
     }
 
 }
