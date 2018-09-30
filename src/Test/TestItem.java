@@ -9,7 +9,7 @@ public class TestItem {
 
     @Test
     public void TestConstructItem(){
-        Item newItem = new Item("UBC", "Not Done");
+        Item newItem = new Item("UBC", false);
         assertEquals(newItem.getItemName(), "UBC");
         assertEquals(newItem.getItemStatus(), "Not Done");
     }

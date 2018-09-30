@@ -17,7 +17,7 @@ public class TestToDoList {
         assertEquals(toDoItems.size(), 1);
         assertEquals(toDoItems.get(0).getItemName(), "do homework");
     }
-    
+
     @Test
     public void testAddManyItemToList(){
         t.AddNewItemToList("eat", toDoItems);

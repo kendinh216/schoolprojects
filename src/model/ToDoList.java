@@ -40,7 +40,7 @@ public class ToDoList {
                     System.out.println("");
                 } else {
                     Item removed = toDo.get(toDo.size() - 1);
-                    removed.setItemStatus("Done");
+                    removed.setItemStatus(true);
                     System.out.println("The last item in the list: " + "(" + removed.getItemName() + ")" + " is removed");
                     System.out.println("");
                 }
@@ -48,12 +48,12 @@ public class ToDoList {
             //Cross off a specific item in the to do list
             else if (userInput.equals("3")) {
                 System.out.println("The items to be done are: ");
-                PrintAllListItemsNames(toDo);
+                ShowAllListItemsNameAndStatus(toDo);
                 System.out.println("Enter the index of the item you want to cross off: ");
                 int index = scanner.nextInt();
                 Item removed = toDo.get(index - 1);
                 if (removed != null) {
-                    removed.setItemStatus("DONE");
+                    removed.setItemStatus(true);
                     System.out.println("The item " + "(" + removed.getItemName() + ")" + " has been crossed off.");
                 } else {
                     System.out.println("There is no item at the index [" + index + "] to be crossed off.");
@@ -91,7 +91,7 @@ public class ToDoList {
     //MODIFIES: this
     //EFFECTS:  add new item to a list of items
     public void AddNewItemToList(String task, ArrayList<Item> array) {
-        Item newItem = new Item(task, "NOT DONE");
+        Item newItem = new Item(task,false);
         array.add(newItem);
     }
 
