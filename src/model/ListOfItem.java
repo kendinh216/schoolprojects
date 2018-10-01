@@ -32,7 +32,7 @@ public class ListOfItem {
 
     public void showAllListItemsNameAndStatus() {
         for (int i = 0; i < listOfItems.size(); i++) {
-            System.out.println((i + 1) + ". " + listOfItems.get(i).getItemName() + " - " + listOfItems.get(i).getItemStatus() +"\n"); }
+            System.out.println((i + 1) + ". " + listOfItems.get(i).getItemName() + " - " + listOfItems.get(i).getItemStatusInString() +"\n"); }
     }
 
     public int getSize(){
