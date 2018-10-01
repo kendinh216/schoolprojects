@@ -11,6 +11,6 @@ public class TestItem {
     public void TestConstructItem(){
         Item newItem = new Item("UBC", false);
         assertEquals(newItem.getItemName(), "UBC");
-        assertEquals(newItem.getItemStatus(), "Not Done");
+        assertEquals(newItem.getItemStatus(), "NOT DONE");
     }
 }
