@@ -9,10 +9,10 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 
-public class ToDoList {
+public class ToDoList implements  Loadable, Saveable{
 
-    private static ListOfItem toDo = new ListOfItem();
-    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+    public static ListOfItem toDo = new ListOfItem();
+    public SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
 
 
     //MODIFIES: this
@@ -78,22 +78,20 @@ public class ToDoList {
             }
         }
     }
-
-    private void save () throws IOException {
+    //MODIFIES: this
+    //EFFECTS:  save all items with their name, status, and due date in list of item into userData file
+    public void save () throws IOException {
         PrintWriter writer = new PrintWriter("userData","UTF-8");
         for (int i = 0; i < toDo.getSize(); i++){
-//            writer.println((toDo.getItem(i).getItemName()));
-//            writer.println (String.valueOf(toDo.getItem(i).getItemStatus()));
-//            writer.println(toDo.getItem(i).getItemDueDateinString());
-
             writer.println((toDo.getItem(i).getItemName()) + " " +
                     (String.valueOf(toDo.getItem(i).getItemStatus())) + " " +
                     (toDo.getItem(i).getItemDueDateinString()));
         }
         writer.close();
     }
-
-    private void load() throws IOException, ParseException {
+    //MODIFIES: this
+    //EFFECTS:  create new item for every line in userData file and add them to list of items
+    public void load() throws IOException, ParseException {
         List<String> lines = Files.readAllLines(Paths.get("userData"));
         for (String line : lines){
             ArrayList<String> partsOfLine = splitOnSpace(line);
@@ -102,9 +100,17 @@ public class ToDoList {
         }
     }
 
-    private static ArrayList<String> splitOnSpace(String line){
+    //EFFECTS: split each line in userData file into a list of string
+    public static ArrayList<String> splitOnSpace(String line){
         String[] splits = line.split(" ");
         return new ArrayList<>(Arrays.asList(splits));
+    }
+
+    public ListOfItem getToDoList(){
+        return toDo;
+    }
+    public void addNewItemToList(String name, boolean status, Date duedate){
+        toDo.addItem(name, status,duedate);
     }
 
 }
