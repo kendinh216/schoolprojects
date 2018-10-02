@@ -1,12 +1,14 @@
 
 package model;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+
 
 public class Item {
     private final String name;
     private boolean status;
     private Date duedate;
-
+    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
 
 
     //MODIFIES: this
@@ -28,6 +30,11 @@ public class Item {
 
     public Date getItemDueDate(){
         return this.duedate;
+    }
+
+    public String getItemDueDateinString(){
+        String s = sdf.format(this.duedate);
+        return s;
     }
 
     public String getItemStatusInString() {
