@@ -1,17 +1,21 @@
 package model;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Scanner;
 
 public class ToDoList {
 
     private static ListOfItem toDo = new ListOfItem();
-    //private static ArrayList<Item> crossedOff = new ArrayList<>();
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+
 
     //MODIFIES: this
     //EFFECTS:  prints out a list of options for the user to choose from
     //          execute either add, remove the last item, remove a specific item, show all items or quite based on user input
-    public ToDoList() {
+    public ToDoList() throws ParseException {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
@@ -29,7 +33,9 @@ public class ToDoList {
             if (userInput.equals("1")) {
                 System.out.println("Enter your todo task: ");
                 String task = scanner.nextLine();
-                toDo.addItem(task,false);
+                System.out.println("Enter the due date of your task: (in the format of yyyy-mm-dd)");
+                String duedate  = scanner.nextLine();
+                toDo.addItem(task,false, sdf.parse(duedate));
                 System.out.println("");
             }
             //Delete the last item in to do list

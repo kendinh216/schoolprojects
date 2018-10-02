@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ListOfItem {
@@ -8,8 +9,8 @@ public class ListOfItem {
 
     //MODIFIES: this
     //EFFECTS:  creates new item and add it to the list of items
-    public void addItem(String name, boolean status){
-        Item newItem = new Item(name, status);
+    public void addItem(String name, boolean status, Date duedate){
+        Item newItem = new Item(name, status, duedate);
         this.listOfItems.add(newItem);
     }
 
@@ -31,8 +32,15 @@ public class ListOfItem {
     }
 
     public void showAllListItemsNameAndStatus() {
+        Date todayDate = new Date();
         for (int i = 0; i < listOfItems.size(); i++) {
-            System.out.println((i + 1) + ". " + listOfItems.get(i).getItemName() + " - " + listOfItems.get(i).getItemStatusInString() +"\n"); }
+            if (todayDate.before(listOfItems.get(i).getItemDueDate())){
+            System.out.println((i + 1) + ". " + listOfItems.get(i).getItemName() + " - " + listOfItems.get(i).getItemStatusInString() + " - Due Date: "
+                    + listOfItems.get(i).getItemDueDate() + " - Not yet due" + "\n"); }
+                    else{
+                System.out.println((i + 1) + ". " + listOfItems.get(i).getItemName() + " - " + listOfItems.get(i).getItemStatusInString() + " - Due Date: "
+                        + listOfItems.get(i).getItemDueDate() + " - Item has passed due date" + "\n"); }
+            }
     }
 
     public int getSize(){

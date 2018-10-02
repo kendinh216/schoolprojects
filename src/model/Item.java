@@ -1,16 +1,20 @@
 
 package model;
+import java.util.Date;
 
 public class Item {
     private final String name;
     private boolean status;
+    private Date duedate;
+
 
 
     //MODIFIES: this
     //EFFECTS:  construct an item
-    public Item(String name, boolean status){
+    public Item(String name, boolean status, Date duedate){
         this.name = name;
         this.status = status;
+        this.duedate = duedate;
     }
     //true means Done
     //false means Not Done
@@ -20,6 +24,10 @@ public class Item {
 
     public String getItemName (){
         return this.name;
+    }
+
+    public Date getItemDueDate(){
+        return this.duedate;
     }
 
     public String getItemStatusInString() {
