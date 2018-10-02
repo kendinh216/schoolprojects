@@ -1,5 +1,4 @@
 package Test;
-import model.Item;
 import model.ListOfItem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
