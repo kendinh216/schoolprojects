@@ -36,10 +36,10 @@ public class ListOfItem {
         for (int i = 0; i < listOfItems.size(); i++) {
             if (todayDate.before(listOfItems.get(i).getItemDueDate())){
             System.out.println((i + 1) + ". " + listOfItems.get(i).getItemName() + " - " + listOfItems.get(i).getItemStatusInString() + " - Due Date: "
-                    + listOfItems.get(i).getItemDueDate() + " - Not yet due" + "\n"); }
+                    + listOfItems.get(i).getItemDueDateinString() + " - Not yet due" + "\n"); }
                     else{
                 System.out.println((i + 1) + ". " + listOfItems.get(i).getItemName() + " - " + listOfItems.get(i).getItemStatusInString() + " - Due Date: "
-                        + listOfItems.get(i).getItemDueDate() + " - Item has passed due date" + "\n"); }
+                        + listOfItems.get(i).getItemDueDateinString() + " - Item has passed due date" + "\n"); }
             }
     }
 

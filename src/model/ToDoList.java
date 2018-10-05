@@ -12,7 +12,7 @@ import java.nio.file.Paths;
 public class ToDoList implements  Loadable, Saveable{
 
     private static ListOfItem toDo = new ListOfItem();
-    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+    private SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 
 
     //MODIFIES: this
@@ -36,7 +36,7 @@ public class ToDoList implements  Loadable, Saveable{
             if (userInput.equals("1")) {
                 System.out.println("Enter your todo task: ");
                 String task = scanner.nextLine();
-                System.out.println("Enter the due date of your task: (in the format of yyyy-mm-dd)");
+                System.out.println("Enter the due date of your task: (in the format of MM/dd/yyyy)");
                 String duedate  = scanner.nextLine();
                 toDo.addItem(task,false, sdf.parse(duedate));
                 System.out.println("");

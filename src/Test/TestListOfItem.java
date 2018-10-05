@@ -12,7 +12,7 @@ import java.text.SimpleDateFormat;
 
 public class TestListOfItem {
     private ListOfItem loi;
-    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+    private SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
     private String duedate = "2017-05-06";
 
     @BeforeEach

@@ -8,7 +8,7 @@ public class Item {
     private final String name;
     private boolean status;
     private Date duedate;
-    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+    private SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 
 
     //MODIFIES: this

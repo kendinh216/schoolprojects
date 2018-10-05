@@ -8,8 +8,8 @@ import java.text.SimpleDateFormat;
 
 public class TestSaveable {
     public static void main (String[] args) throws IOException, ParseException {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
-        String duedate = "2017-05-06";
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+        String duedate = "01/09/2019";
 
         ToDoList newlist = new ToDoList();
         newlist.addNewItemToList("eat-food", false, sdf.parse(duedate));
