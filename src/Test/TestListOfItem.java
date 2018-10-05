@@ -1,20 +1,19 @@
 package Test;
+
+import model.Item;
 import model.ListOfItem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import model.Item;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 
 public class TestListOfItem {
     private ListOfItem loi;
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
-    String duedate = "2017-05-06";
+    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+    private String duedate = "2017-05-06";
 
     @BeforeEach
     void runBefore() {

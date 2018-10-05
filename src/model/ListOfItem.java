@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 public class ListOfItem {
-    List<Item> listOfItems = new ArrayList<>();
+    private List<Item> listOfItems = new ArrayList<>();
 
     //MODIFIES: this
     //EFFECTS:  creates new item and add it to the list of items

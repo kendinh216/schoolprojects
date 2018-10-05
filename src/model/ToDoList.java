@@ -11,8 +11,8 @@ import java.nio.file.Paths;
 
 public class ToDoList implements  Loadable, Saveable{
 
-    public static ListOfItem toDo = new ListOfItem();
-    public SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+    private static ListOfItem toDo = new ListOfItem();
+    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
 
 
     //MODIFIES: this
@@ -109,6 +109,9 @@ public class ToDoList implements  Loadable, Saveable{
     public ListOfItem getToDoList(){
         return toDo;
     }
+
+    //MODIFIES: this
+    //EFFECTS:  add new item to the to do list
     public void addNewItemToList(String name, boolean status, Date duedate){
         toDo.addItem(name, status,duedate);
     }
