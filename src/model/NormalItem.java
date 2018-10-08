@@ -6,7 +6,7 @@ import java.util.Date;
 public class NormalItem extends Item {
 
     //MODIFIES: this
-    //EFFECTS:  construct an item
+    //EFFECTS:  construct a new normal item
     public NormalItem(String name,boolean status, Date dueDate, boolean urgency){
         super(name, status, dueDate, urgency);
     }

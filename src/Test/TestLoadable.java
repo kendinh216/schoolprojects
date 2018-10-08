@@ -10,7 +10,7 @@ public class TestLoadable {
     public TestLoadable() throws IOException, ParseException {
         ToDoList newlist = new ToDoList();
         testLoad(newlist);
-        newlist.getToDoList().showAllListItemsNameAndStatus();
+        newlist.getToDoList().showAllTasksNameAndStatus();
     }
     public void testLoad (Loadable ld) throws IOException, ParseException {
         ld.load();

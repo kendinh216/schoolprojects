@@ -48,7 +48,7 @@ public class ToDoList implements  Loadable, Saveable{
                 System.out.println("");
             }
             //Delete the last item in to do list
-            //If to do list is empty then do nothing
+            //If to-do list is empty then do nothing
             else if (userInput.equals("2")) {
                 if (toDo.getSize() == 0) {
                     System.out.println("The ToDo list is empty");
@@ -61,7 +61,7 @@ public class ToDoList implements  Loadable, Saveable{
             //Cross off a specific item in the to do list
             else if (userInput.equals("3")) {
                 System.out.println("The items to be done are: ");
-                toDo.showAllListItemsNameAndStatus();
+                toDo.showAllTasksNameAndStatus();
                 System.out.println("Enter the index of the item you want to cross off: ");
                 int index = scanner.nextInt();
                 toDo.removeIndexItem(index);
@@ -69,7 +69,7 @@ public class ToDoList implements  Loadable, Saveable{
             //Show all items in to do list with their status
             else if (userInput.equals("4")){
                 System.out.println("The list of items you have entered are: ");
-                toDo.showAllListItemsNameAndStatus();
+                toDo.showAllTasksNameAndStatus();
             }
             //Ends application
             else if (userInput.equals("5")) {

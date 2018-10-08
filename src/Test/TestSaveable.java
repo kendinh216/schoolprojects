@@ -15,7 +15,7 @@ public class TestSaveable {
         newlist.addNewItemToList("eat-food", false, sdf.parse(duedate),true);
         newlist.addNewItemToList("play-outside", true, sdf.parse(duedate),true);
         newlist.save();
-        newlist.getToDoList().showAllListItemsNameAndStatus();
+        newlist.getToDoList().showAllTasksNameAndStatus();
     }
 }
 

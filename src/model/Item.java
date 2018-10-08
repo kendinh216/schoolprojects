@@ -10,6 +10,8 @@ public abstract class Item {
     protected SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
     protected boolean urgency;
 
+    //MODIFIES: this
+    //EFFECTS:  construct a new item
     public Item(String name,boolean status, Date dueDate, boolean urgency) {
         this.status = status;
         this.dueDate = dueDate;
