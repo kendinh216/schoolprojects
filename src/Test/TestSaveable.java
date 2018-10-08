@@ -12,8 +12,8 @@ public class TestSaveable {
         String duedate = "01/09/2019";
 
         ToDoList newlist = new ToDoList();
-        newlist.addNewItemToList("eat-food", false, sdf.parse(duedate));
-        newlist.addNewItemToList("play-outside", true, sdf.parse(duedate));
+        newlist.addNewItemToList("eat-food", false, sdf.parse(duedate),true);
+        newlist.addNewItemToList("play-outside", true, sdf.parse(duedate),true);
         newlist.save();
         newlist.getToDoList().showAllListItemsNameAndStatus();
     }

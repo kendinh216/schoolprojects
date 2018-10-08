@@ -1,7 +1,8 @@
 package Test;
 
-import org.junit.jupiter.api.Test;
 import model.Item;
+import org.junit.jupiter.api.Test;
+import model.NormalItem;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -13,8 +14,8 @@ public class TestItem {
     String duedate = "02-10-2019";
     @Test
     public void TestConstructItem() throws ParseException {
-        Item newItem = new Item("UBC", false, sdf.parse(duedate));
-        assertEquals(newItem.getItemName(), "UBC");
-        assertEquals(newItem.getItemStatusInString(), "NOT DONE");
+        Item newNormalItem = new NormalItem("UBC", false, sdf.parse(duedate), false);
+        assertEquals(newNormalItem.getItemName(), "UBC");
+        assertEquals(newNormalItem.getItemStatusInString(), "NOT DONE");
     }
 }

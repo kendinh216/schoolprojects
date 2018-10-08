@@ -24,10 +24,10 @@ public class ToDoList implements  Loadable, Saveable{
         while (true) {
             // Prints menu choices
             System.out.println("Please select one of the following options:");
-            System.out.println("[1] Add an item to your ToDo list (replace a space with \"-\") ");
-            System.out.println("[2] Remove the last item from your ToDo list.");
-            System.out.println("[3] Remove a specific item from your ToDo list");
-            System.out.println("[4] Show all items in Todo and Crossed Off lists.");
+            System.out.println("[1] Add a task to your ToDo list (replace a space with \"-\") ");
+            System.out.println("[2] Remove the last task from your ToDo list.");
+            System.out.println("[3] Remove a specific task from your ToDo list");
+            System.out.println("[4] Show all tasks in Todo list.");
             System.out.println("[5] Quit application.");
             String userInput = scanner.next();
             scanner.nextLine();
@@ -38,7 +38,13 @@ public class ToDoList implements  Loadable, Saveable{
                 String task = scanner.nextLine();
                 System.out.println("Enter the due date of your task: (in the format of MM/dd/yyyy)");
                 String duedate  = scanner.nextLine();
-                toDo.addItem(task,false, sdf.parse(duedate));
+                System.out.println("Is this task an urgency? (y/n)");
+                String urgency = scanner.nextLine();
+                if (urgency.contentEquals("y")){
+                    toDo.addUrgenItem(task, false, sdf.parse(duedate), true);}
+                else{
+                    toDo.addNormalItem(task,false, sdf.parse(duedate), false);}
+
                 System.out.println("");
             }
             //Delete the last item in to do list
@@ -85,7 +91,7 @@ public class ToDoList implements  Loadable, Saveable{
         for (int i = 0; i < toDo.getSize(); i++){
             writer.println((toDo.getItem(i).getItemName()) + " " +
                     (String.valueOf(toDo.getItem(i).getItemStatus())) + " " +
-                    (toDo.getItem(i).getItemDueDateinString()));
+                    (toDo.getItem(i).getItemDueDateinString()) + " " + (toDo.getItem(i).getItemUrgency()));
         }
         writer.close();
     }
@@ -96,7 +102,7 @@ public class ToDoList implements  Loadable, Saveable{
         for (String line : lines){
             ArrayList<String> partsOfLine = splitOnSpace(line);
             Date duedate = sdf.parse(partsOfLine.get(2));
-            toDo.addItem(partsOfLine.get(0), Boolean.parseBoolean(partsOfLine.get(1)), duedate );
+            toDo.addNormalItem(partsOfLine.get(0), Boolean.parseBoolean(partsOfLine.get(1)), duedate, Boolean.parseBoolean(partsOfLine.get(3)) );
         }
     }
 
@@ -112,8 +118,8 @@ public class ToDoList implements  Loadable, Saveable{
 
     //MODIFIES: this
     //EFFECTS:  add new item to the to do list
-    public void addNewItemToList(String name, boolean status, Date duedate){
-        toDo.addItem(name, status,duedate);
+    public void addNewItemToList(String name, boolean status, Date duedate ,boolean urgency){
+        toDo.addNormalItem(name, status, duedate, urgency);
     }
 
 }

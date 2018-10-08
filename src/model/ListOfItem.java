@@ -9,9 +9,14 @@ public class ListOfItem {
 
     //MODIFIES: this
     //EFFECTS:  creates new item and add it to the list of items
-    public void addItem(String name, boolean status, Date duedate){
-        Item newItem = new Item(name, status, duedate);
-        this.listOfItems.add(newItem);
+    public void addNormalItem(String name, boolean status, Date dueDate, boolean urgency){
+        Item newNormalItem = new NormalItem(name, status, dueDate, urgency);
+        this.listOfItems.add(newNormalItem);
+    }
+
+    public void addUrgenItem(String name, boolean status, Date dueDate, boolean urgency){
+        Item newUrgenItem = new UrgenItem(name, status, dueDate, urgency);
+        this.listOfItems.add(newUrgenItem);
     }
 
     public void removeLastItem (){
@@ -36,10 +41,10 @@ public class ListOfItem {
         for (int i = 0; i < listOfItems.size(); i++) {
             if (todayDate.before(listOfItems.get(i).getItemDueDate())){
             System.out.println((i + 1) + ". " + listOfItems.get(i).getItemName() + " - " + listOfItems.get(i).getItemStatusInString() + " - Due Date: "
-                    + listOfItems.get(i).getItemDueDateinString() + " - Not yet due" + "\n"); }
+                    + listOfItems.get(i).getItemDueDateinString() + " - NOT DUE" + "\n"); }
                     else{
                 System.out.println((i + 1) + ". " + listOfItems.get(i).getItemName() + " - " + listOfItems.get(i).getItemStatusInString() + " - Due Date: "
-                        + listOfItems.get(i).getItemDueDateinString() + " - Item has passed due date" + "\n"); }
+                        + listOfItems.get(i).getItemDueDateinString() + " - PASSED DUE-DATE" + "\n"); }
             }
     }
 
