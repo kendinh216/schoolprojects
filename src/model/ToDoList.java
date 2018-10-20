@@ -1,5 +1,7 @@
 package model;
 
+import Exceptions.TooManyThingsToDoException;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -11,24 +13,28 @@ import java.nio.file.Paths;
 
 public class ToDoList implements  Loadable, Saveable{
 
-    private static ListOfItem toDo = new ListOfItem();
+    private ListOfItem toDo = new ListOfItem();
     private SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 
 
     //MODIFIES: this
     //EFFECTS:  prints out a list of options for the user to choose from
     //          execute either add, remove the last item, remove a specific item, show all items or quite based on user userData
-    public ToDoList() throws ParseException, IOException {
+    public ToDoList() throws ParseException, IOException, TooManyThingsToDoException {
         Scanner scanner = new Scanner(System.in);
-        load();
+        try {load();}
+            catch(IndexOutOfBoundsException e){}
+
         while (true) {
             // Prints menu choices
             System.out.println("Please select one of the following options:");
             System.out.println("[1] Add a task to your ToDo list (replace a space with \"-\") ");
-            System.out.println("[2] Remove the last task from your ToDo list.");
-            System.out.println("[3] Remove a specific task from your ToDo list");
-            System.out.println("[4] Show all tasks in Todo list.");
-            System.out.println("[5] Quit application.");
+            System.out.println("[2] Cross-off the last task from your ToDo list");
+            System.out.println("[3] Cross-off a specific task from your ToDo list");
+            System.out.println("[4] Remove a specific task from your ToDo list");
+            System.out.println("[5] Remove all tasks from ToDo list");
+            System.out.println("[6] Show all tasks in Todo list");
+            System.out.println("[7] Quit application");
             String userInput = scanner.next();
             scanner.nextLine();
 
@@ -41,20 +47,37 @@ public class ToDoList implements  Loadable, Saveable{
                 System.out.println("Is this task an urgency? (y/n)");
                 String urgency = scanner.nextLine();
                 if (urgency.contentEquals("y")){
-                    toDo.addUrgenItem(task, false, sdf.parse(duedate), true);}
-                else{
-                    toDo.addNormalItem(task,false, sdf.parse(duedate), false);}
+                    try {
+                        toDo.addUrgenItem(task, false, sdf.parse(duedate), true);
+                    } catch (TooManyThingsToDoException e) {
+                        System.out.println("There are more than 5 undone tasks !");
+                        System.out.println("Please cross off at least 1 task from list.");
 
-                System.out.println("");
+                    }
+                    finally{
+                        System.out.println("");
+                    }
+                }
+                else{
+                    try {
+                        toDo.addNormalItem(task,false, sdf.parse(duedate), false);
+                    } catch (TooManyThingsToDoException e) {
+                        System.out.println("There are more than 5 undone tasks!");
+                        System.out.println("Please cross off at least 1 task from list.");
+                    }
+                    finally {
+                        System.out.println("");
+                    }
+                }
             }
-            //Delete the last item in to do list
+            //Cross-off the last item in to do list
             //If to-do list is empty then do nothing
             else if (userInput.equals("2")) {
                 if (toDo.getSize() == 0) {
                     System.out.println("The ToDo list is empty");
                     System.out.println("");
                 } else {
-                    toDo.removeLastItem();
+                    toDo.crossOffLastItem();
                     System.out.println("");
                 }
             }
@@ -63,16 +86,47 @@ public class ToDoList implements  Loadable, Saveable{
                 System.out.println("The items to be done are: ");
                 toDo.showAllTasksNameAndStatus();
                 System.out.println("Enter the index of the item you want to cross off: ");
-                int index = scanner.nextInt();
-                toDo.removeIndexItem(index);
+                int index;
+                while (true){
+                    index = scanner.nextInt();
+                    try {toDo.crossOffIndexItem(index);
+                        break;}
+                    catch(IndexOutOfBoundsException e){
+                        System.out.println("Invalid input. Please try again."); }
+                }
+                System.out.println("");
             }
-            //Show all items in to do list with their status
+
+            // Remove a task from the to do list at index
             else if (userInput.equals("4")){
+                System.out.println("The items to be done are: ");
+                toDo.showAllTasksNameAndStatus();
+                System.out.println("Enter the index of the item you want to cross off: ");
+                int index;
+                while (true){
+                    index = scanner.nextInt();
+                try {toDo.removeItem(index - 1);
+                    break;}
+                catch(IndexOutOfBoundsException e){
+                    System.out.println("Invalid input. Please try again."); }
+                }
+                System.out.println("");
+            }
+
+            //Remove all tasks in to do list
+            else if (userInput.equals("5")){
+                toDo.removeAllItem();
+                System.out.println("");
+            }
+
+            //Show all items in to do list with their status
+            else if (userInput.equals("6")){
                 System.out.println("The list of items you have entered are: ");
                 toDo.showAllTasksNameAndStatus();
+                System.out.println("");
             }
             //Ends application
-            else if (userInput.equals("5")) {
+            else if (userInput.equals("7")) {
                 save();
                 System.out.println("Thank you for using our application :)");
                 break;
@@ -80,7 +134,7 @@ public class ToDoList implements  Loadable, Saveable{
             //User input wrong command so repeat the menu choices
             else {
                 System.out.println("Sorry but you have chosen an invalid option. Please choose again." +"\n");
-
+                System.out.println("");
             }
         }
     }
@@ -97,10 +151,13 @@ public class ToDoList implements  Loadable, Saveable{
     }
     //MODIFIES: this
     //EFFECTS:  create new item for every line in userData file and add them to list of items
-    public void load() throws IOException, ParseException {
+    public void load() throws IOException, ParseException, TooManyThingsToDoException {
         List<String> lines = Files.readAllLines(Paths.get("userData"));
+
         for (String line : lines){
             ArrayList<String> partsOfLine = splitOnSpace(line);
+            if (partsOfLine.size() <= 1)
+                throw new IndexOutOfBoundsException();
             Date duedate = sdf.parse(partsOfLine.get(2));
             toDo.addNormalItem(partsOfLine.get(0), Boolean.parseBoolean(partsOfLine.get(1)), duedate, Boolean.parseBoolean(partsOfLine.get(3)) );
         }
@@ -118,7 +175,7 @@ public class ToDoList implements  Loadable, Saveable{
 
     //MODIFIES: this
     //EFFECTS:  add new item to the to do list
-    public void addNewItemToList(String name, boolean status, Date duedate ,boolean urgency){
+    public void addNewItemToList(String name, boolean status, Date duedate ,boolean urgency) throws TooManyThingsToDoException {
         toDo.addNormalItem(name, status, duedate, urgency);
     }
 
