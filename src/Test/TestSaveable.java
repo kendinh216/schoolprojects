@@ -1,5 +1,6 @@
 package Test;
 
+import Exceptions.TooManyThingsToDoException;
 import model.ToDoList;
 
 import java.io.IOException;
@@ -7,7 +8,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 public class TestSaveable {
-    public static void main (String[] args) throws IOException, ParseException {
+    public static void main (String[] args) throws IOException, ParseException, TooManyThingsToDoException {
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
         String duedate = "01/09/2019";
 
