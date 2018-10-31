@@ -103,6 +103,11 @@ public class ToDoList implements  Loadable, Saveable{
 
             // Remove a task from the to do list at index
             else if (userInput.equals("4")){
+                if (toDo.getSize() == 0) {
+                    System.out.println("Sorry this action is not valid because the Todo list is empty.");
+                    System.out.println("");
+                    continue;
+                }
                 System.out.println("The items to be done are: ");
                 toDo.showAllTasksNameAndStatus();
                 System.out.println("Enter the index of the task you want to cross off: ");
