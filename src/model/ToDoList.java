@@ -48,9 +48,11 @@ public class ToDoList implements  Loadable, Saveable{
                 String urgency = scanner.nextLine();
                 if (urgency.contentEquals("y")){
                     try {
-                        toDo.addUrgenItem(task, false, sdf.parse(duedate), true);
+                        Item i = new UrgenItem(task,false, sdf.parse(duedate), true );
+                        toDo.addUrgenItem(i);
+                        i.addToToDoList(toDo);
                     } catch (TooManyThingsToDoException e) {
-                        System.out.println("There are more than 5 undone tasks !");
+                        System.out.println("There are at least 5 undone tasks !");
                         System.out.println("Please cross off at least 1 task from list.");
 
                     }
@@ -60,7 +62,9 @@ public class ToDoList implements  Loadable, Saveable{
                 }
                 else{
                     try {
-                        toDo.addNormalItem(task,false, sdf.parse(duedate), false);
+                        Item i = new NormalItem(task,false, sdf.parse(duedate), false);
+                        toDo.addNormalItem(i);
+                        i.addToToDoList(toDo);
                     } catch (TooManyThingsToDoException e) {
                         System.out.println("There are more than 5 undone tasks!");
                         System.out.println("Please cross off at least 1 task from list.");
@@ -101,11 +105,15 @@ public class ToDoList implements  Loadable, Saveable{
             else if (userInput.equals("4")){
                 System.out.println("The items to be done are: ");
                 toDo.showAllTasksNameAndStatus();
-                System.out.println("Enter the index of the item you want to cross off: ");
+                System.out.println("Enter the index of the task you want to cross off: ");
                 int index;
                 while (true){
                     index = scanner.nextInt();
-                try {toDo.removeItem(index - 1);
+                try {Item i = toDo.getItem(index -1);
+                    ListOfItem loi = i.getToDoList();
+                    toDo.removeItem(i);
+                    i.removeFromToDoList(toDo);
+                    System.out.println("By removing this task, you have " + loi.getSize()+ " task left.");
                     break;}
                 catch(IndexOutOfBoundsException e){
                     System.out.println("Invalid input. Please try again."); }
@@ -159,7 +167,8 @@ public class ToDoList implements  Loadable, Saveable{
             if (partsOfLine.size() <= 1)
                 throw new IndexOutOfBoundsException();
             Date duedate = sdf.parse(partsOfLine.get(2));
-            toDo.addNormalItem(partsOfLine.get(0), Boolean.parseBoolean(partsOfLine.get(1)), duedate, Boolean.parseBoolean(partsOfLine.get(3)) );
+            Item i = new NormalItem(partsOfLine.get(0), Boolean.parseBoolean(partsOfLine.get(1)), duedate, Boolean.parseBoolean(partsOfLine.get(3)));
+            toDo.addNormalItem(i);
         }
     }
 
@@ -176,7 +185,9 @@ public class ToDoList implements  Loadable, Saveable{
     //MODIFIES: this
     //EFFECTS:  add new item to the to do list
     public void addNewItemToList(String name, boolean status, Date duedate ,boolean urgency) throws TooManyThingsToDoException {
-        toDo.addNormalItem(name, status, duedate, urgency);
+        Item i = new NormalItem(name, status, duedate, urgency);
+        toDo.addNormalItem(i);
+        i.addToToDoList(toDo);
     }
 
 }
