@@ -179,4 +179,19 @@ public class TestListOfItem {
             System.out.println("Good");
         }
     }
+
+    @Test
+    void testAddNormalItemRelationshipWithItem() throws ParseException, TooManyThingsToDoException {
+        Item i = new NormalItem("go sunbathing", false,sdf.parse(duedate),false);
+        loi.addNormalItem(i);
+        assertEquals(i.getToDoList().getSize(),1);
+    }
+
+    @Test
+    void testAddUrgenItemRelationshipWithItem() throws ParseException, TooManyThingsToDoException{
+        Item i = new NormalItem("go sunbathing", false,sdf.parse(duedate),true);
+        loi.addNormalItem(i);
+        assertEquals(i.getToDoList().getSize(),1);
+
+    }
 }
