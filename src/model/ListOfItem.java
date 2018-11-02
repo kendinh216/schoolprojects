@@ -11,32 +11,40 @@ public class ListOfItem {
 
     //MODIFIES: this
     //EFFECTS:  creates new normal item and add it to the list of items
-    public void addNormalItem(String name, boolean status, Date dueDate, boolean urgency) throws TooManyThingsToDoException {
+    public void addNormalItem(Item i) throws TooManyThingsToDoException {
         int notDoneTask = 0;
-        for (int i = 0; i < listOfItems.size(); i++){
-            if (listOfItems.get(i).status == true){
+        for (int a = 0; a < listOfItems.size(); a++) {
+            if (listOfItems.get(a).getItemStatus() == false) {
                 notDoneTask += 1;
             }
         }
         if (notDoneTask >= 5)
             throw new TooManyThingsToDoException();
-        Item newNormalItem = new NormalItem(name, status, dueDate, urgency);
-        this.listOfItems.add(newNormalItem);
+        if (i == null)
+            return;
+        if (!listOfItems.contains(i)) {
+            listOfItems.add(i);
+            i.addToToDoList(this);
+        }
     }
 
     //MODIFIES: this
     //EFFECTS:  creates new urgent item and add it to the list of items
-    public void addUrgenItem(String name, boolean status, Date dueDate, boolean urgency) throws TooManyThingsToDoException {
-        int notDoneTask = 0;
-        for (int i = 0; i < listOfItems.size(); i++){
-            if (listOfItems.get(i).status == true){
+    public void addUrgenItem(Item i) throws TooManyThingsToDoException {
+            int notDoneTask = 0;
+        for (int a = 0; a < listOfItems.size(); a++) {
+            if (listOfItems.get(a).getItemStatus() == false) {
                 notDoneTask += 1;
             }
         }
         if (notDoneTask >= 5)
             throw new TooManyThingsToDoException();
-        Item newUrgenItem = new UrgenItem(name, status, dueDate, urgency);
-        this.listOfItems.add(newUrgenItem);
+        if (i == null)
+            return;
+        if (!listOfItems.contains(i)) {
+            listOfItems.add(i);
+            i.addToToDoList(this);
+        }
     }
 
     //REQUIRES: index not out of bound of list
@@ -45,7 +53,7 @@ public class ListOfItem {
     public void crossOffLastItem(){
         Item removed = listOfItems.get(listOfItems.size() -1);
         removed.setItemStatus(true);
-        System.out.println("The last item in the list: " + "(" + removed.getItemName() + ")" + " is removed");
+        System.out.println("The last item in the list: " + "(" + removed.getItemName() + ")" + " has been crossed off.");
     }
 
     //REQUIRES: index not out of bound of list
@@ -92,13 +100,20 @@ public class ListOfItem {
     //REQUIRES: index i is not out of bound
     //MODIFIES: this
     //EFFECTS:  remove item in list at index i
-    public void removeItem(int i){
-        this.listOfItems.remove(i);
+    public void removeItem(Item i){
+        if (i == null)
+            return;
+        if (listOfItems.contains(i))
+            listOfItems.remove(i);
+            i.removeFromToDoList(this);
     }
 
     public void removeAllItem () {
         for (int i = 0; i < listOfItems.size();i=i ) {
-            listOfItems.remove(i);
+            Item a = listOfItems.get(i);
+            listOfItems.remove(a);
+            a.removeFromToDoList(this);
+
         }
     }
 }

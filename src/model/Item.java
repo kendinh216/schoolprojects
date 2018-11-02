@@ -1,7 +1,10 @@
 package model;
 
+import Exceptions.TooManyThingsToDoException;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Objects;
 
 public abstract class Item {
     protected String name;
@@ -9,6 +12,7 @@ public abstract class Item {
     protected Date dueDate;
     protected SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
     protected boolean urgency;
+    private ListOfItem toDoList;
 
     //MODIFIES: this
     //EFFECTS:  construct a new item
@@ -52,5 +56,51 @@ public abstract class Item {
 
     public boolean getItemUrgency(){
         return this.urgency;
+    }
+
+    public void addToToDoList(ListOfItem loi) throws TooManyThingsToDoException {
+        if (toDoList != null && !toDoList.equals(loi))
+            loi.removeItem(this);
+        if (loi == null)
+            return;
+        if (!loi.equals(toDoList)){
+            toDoList = loi;
+            if (urgency)
+                loi.addUrgenItem(this);
+            else
+                loi.addNormalItem(this);
+        }
+    }
+
+    public void removeFromToDoList(ListOfItem loi){
+        if (loi == null)
+            return;
+        if (loi.equals(toDoList)){
+            ListOfItem oldLoi = toDoList;
+            toDoList = null;
+            oldLoi.removeItem(this);
+        }
+    }
+
+    public ListOfItem getToDoList(){
+        return toDoList;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Item item = (Item) o;
+        return status == item.status &&
+                urgency == item.urgency &&
+                Objects.equals(name, item.name) &&
+                Objects.equals(dueDate, item.dueDate) &&
+                Objects.equals(sdf, item.sdf);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(name, status, dueDate, sdf, urgency);
     }
 }
