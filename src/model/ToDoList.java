@@ -52,8 +52,7 @@ public class ToDoList implements  Loadable, Saveable{
                         toDo.addUrgenItem(i);
                         i.addToToDoList(toDo);
                     } catch (TooManyThingsToDoException e) {
-                        System.out.println("There are at least 5 undone tasks !");
-                        System.out.println("Please cross off at least 1 task from list.");
+                        printMoreThanFiveUnDoneTasks();
 
                     }
                     finally{
@@ -66,8 +65,8 @@ public class ToDoList implements  Loadable, Saveable{
                         toDo.addNormalItem(i);
                         i.addToToDoList(toDo);
                     } catch (TooManyThingsToDoException e) {
-                        System.out.println("There are more than 5 undone tasks!");
-                        System.out.println("Please cross off at least 1 task from list.");
+                        printMoreThanFiveUnDoneTasks();
+
                     }
                     finally {
                         System.out.println("");
@@ -87,8 +86,7 @@ public class ToDoList implements  Loadable, Saveable{
             }
             //Cross off a specific item in the to do list
             else if (userInput.equals("3")) {
-                System.out.println("The items to be done are: ");
-                toDo.showAllTasksNameAndStatus();
+                showAllTasksWithNameAndStatus();
                 System.out.println("Enter the index of the item you want to cross off: ");
                 int index;
                 while (true){
@@ -96,7 +94,7 @@ public class ToDoList implements  Loadable, Saveable{
                     try {toDo.crossOffIndexItem(index);
                         break;}
                     catch(IndexOutOfBoundsException e){
-                        System.out.println("Invalid input. Please try again."); }
+                        printInvalidInputMessege(); }
                 }
                 System.out.println("");
             }
@@ -108,9 +106,8 @@ public class ToDoList implements  Loadable, Saveable{
                     System.out.println("");
                     continue;
                 }
-                System.out.println("The items to be done are: ");
-                toDo.showAllTasksNameAndStatus();
-                System.out.println("Enter the index of the task you want to cross off: ");
+                showAllTasksWithNameAndStatus();
+                System.out.println("Enter the index of the task you want to remove: ");
                 int index;
                 while (true){
                     index = scanner.nextInt();
@@ -121,7 +118,7 @@ public class ToDoList implements  Loadable, Saveable{
                     System.out.println("By removing this task, you have " + loi.getSize()+ " task left.");
                     break;}
                 catch(IndexOutOfBoundsException e){
-                    System.out.println("Invalid input. Please try again."); }
+                    printInvalidInputMessege(); }
                 }
                 System.out.println("");
             }
@@ -134,8 +131,7 @@ public class ToDoList implements  Loadable, Saveable{
 
             //Show all items in to do list with their status
             else if (userInput.equals("6")){
-                System.out.println("The list of items you have entered are: ");
-                toDo.showAllTasksNameAndStatus();
+                showAllTasksWithNameAndStatus();
                 System.out.println("");
             }
             //Ends application
@@ -146,11 +142,26 @@ public class ToDoList implements  Loadable, Saveable{
             }
             //User input wrong command so repeat the menu choices
             else {
-                System.out.println("Sorry but you have chosen an invalid option. Please choose again." +"\n");
+                printInvalidInputMessege();
                 System.out.println("");
             }
         }
     }
+
+    private void printInvalidInputMessege() {
+        System.out.println("Invalid input. Please try again.");
+    }
+
+    private void showAllTasksWithNameAndStatus() {
+        System.out.println("The items to be done are: ");
+        toDo.showAllTasksNameAndStatus();
+    }
+
+    private void printMoreThanFiveUnDoneTasks() {
+        System.out.println("There are at least 5 undone tasks !");
+        System.out.println("Please cross off at least 1 task from list.");
+    }
+
     //MODIFIES: this
     //EFFECTS:  save all items with their name, status, and due date in list of item into userData file
     public void save () throws IOException {
@@ -187,6 +198,7 @@ public class ToDoList implements  Loadable, Saveable{
         return toDo;
     }
 
+    //This method is created to used in TestSavable class
     //MODIFIES: this
     //EFFECTS:  add new item to the to do list
     public void addNewItemToList(String name, boolean status, Date duedate ,boolean urgency) throws TooManyThingsToDoException {

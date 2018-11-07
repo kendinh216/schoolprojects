@@ -12,6 +12,11 @@ public class ListOfItem {
     //MODIFIES: this
     //EFFECTS:  creates new normal item and add it to the list of items
     public void addNormalItem(Item i) throws TooManyThingsToDoException {
+        checkIfNumberOfUndoneTaskGreaterOrEqualToFive();
+        addItemToListOfItemsAndUpdateRelationshipWithItem(i);
+    }
+
+    private void checkIfNumberOfUndoneTaskGreaterOrEqualToFive() throws TooManyThingsToDoException {
         int notDoneTask = 0;
         for (int a = 0; a < listOfItems.size(); a++) {
             if (listOfItems.get(a).getItemStatus() == false) {
@@ -20,6 +25,10 @@ public class ListOfItem {
         }
         if (notDoneTask >= 5)
             throw new TooManyThingsToDoException();
+    }
+
+
+    private void addItemToListOfItemsAndUpdateRelationshipWithItem(Item i) throws TooManyThingsToDoException {
         if (i == null)
             return;
         if (!listOfItems.contains(i)) {
@@ -27,32 +36,23 @@ public class ListOfItem {
             i.addToToDoList(this);
         }
     }
-
     //MODIFIES: this
     //EFFECTS:  creates new urgent item and add it to the list of items
     public void addUrgenItem(Item i) throws TooManyThingsToDoException {
-            int notDoneTask = 0;
-        for (int a = 0; a < listOfItems.size(); a++) {
-            if (listOfItems.get(a).getItemStatus() == false) {
-                notDoneTask += 1;
-            }
-        }
-        if (notDoneTask >= 5)
-            throw new TooManyThingsToDoException();
-        if (i == null)
-            return;
-        if (!listOfItems.contains(i)) {
-            listOfItems.add(i);
-            i.addToToDoList(this);
-        }
+        checkIfNumberOfUndoneTaskGreaterOrEqualToFive();
+        addItemToListOfItemsAndUpdateRelationshipWithItem(i);
     }
 
-    //REQUIRES: index not out of bound of list
+
     //MODIFIES: this
     //EFFECTS:  remove the last item in list of to do
     public void crossOffLastItem(){
         Item removed = listOfItems.get(listOfItems.size() -1);
         removed.setItemStatus(true);
+        printRemovedItemName(removed);
+    }
+
+    private void printRemovedItemName(Item removed) {
         System.out.println("The last item in the list: " + "(" + removed.getItemName() + ")" + " has been crossed off.");
     }
 
@@ -63,7 +63,7 @@ public class ListOfItem {
         Item removed = listOfItems.get(index - 1);
         if (removed != null){
             removed.setItemStatus(true);
-            System.out.println("The item " + "(" + removed.getItemName() + ")" + " has been crossed off.");
+            printRemovedItemName(removed);
         }
         else {
             System.out.println("There is no item at the index [" + index + "] to be crossed off.");
@@ -116,4 +116,6 @@ public class ListOfItem {
 
         }
     }
+
+
 }
