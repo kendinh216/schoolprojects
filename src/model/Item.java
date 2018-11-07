@@ -22,6 +22,7 @@ public abstract class Item {
         this.name = name;
         this.urgency = urgency;
     }
+
     public void setItemUrgency(boolean urgency){
         this.urgency = urgency;
     }
