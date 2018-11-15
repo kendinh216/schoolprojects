@@ -1,7 +1,11 @@
 package model;
 
 import Exceptions.TooManyThingsToDoException;
+import observers.Observable;
+import observers.MessagePrinter;
+import observers.TaskCounter;
 
+import java.net.MalformedURLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -11,7 +15,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 
-public class ToDoList implements  Loadable, Saveable{
+public class ToDoList extends Observable implements  Loadable, Saveable{
 
     private ListOfItem toDo = new ListOfItem();
     private SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
@@ -21,6 +25,8 @@ public class ToDoList implements  Loadable, Saveable{
     //EFFECTS:  prints out a list of options for the user to choose from
     //          execute either add, remove the last item, remove a specific item, show all items or quite based on user userData
     public ToDoList() throws ParseException, IOException, TooManyThingsToDoException {
+        this.addObserver(new MessagePrinter());
+        this.addObserver(new TaskCounter());
         Scanner scanner = new Scanner(System.in);
         try {load();}
             catch(IndexOutOfBoundsException e){}
@@ -35,6 +41,7 @@ public class ToDoList implements  Loadable, Saveable{
             System.out.println("[5] Remove all tasks from ToDo list");
             System.out.println("[6] Show all tasks in Todo list");
             System.out.println("[7] Quit application");
+            System.out.println("[8] See 210 Website");
             String userInput = scanner.next();
             scanner.nextLine();
 
@@ -50,6 +57,7 @@ public class ToDoList implements  Loadable, Saveable{
                     try {
                         Item i = new UrgenItem(task,false, sdf.parse(duedate), true );
                         toDo.addUrgenItem(i);
+                        notifyObserver(i);
                         i.addToToDoList(toDo);
                     } catch (TooManyThingsToDoException e) {
                         printMoreThanFiveUnDoneTasks();
@@ -63,6 +71,7 @@ public class ToDoList implements  Loadable, Saveable{
                     try {
                         Item i = new NormalItem(task,false, sdf.parse(duedate), false);
                         toDo.addNormalItem(i);
+                        notifyObserver(i);
                         i.addToToDoList(toDo);
                     } catch (TooManyThingsToDoException e) {
                         printMoreThanFiveUnDoneTasks();
@@ -126,6 +135,7 @@ public class ToDoList implements  Loadable, Saveable{
             //Remove all tasks in to do list
             else if (userInput.equals("5")){
                 toDo.removeAllItem();
+                System.out.println("Your ToDo list is now empty.");
                 System.out.println("");
             }
 
@@ -140,6 +150,28 @@ public class ToDoList implements  Loadable, Saveable{
                 System.out.println("Thank you for using our application :)");
                 break;
             }
+
+            //See 210 webpage content
+            else if (userInput.equals("8")) {
+                ReadWebPageEx reader = new ReadWebPageEx();
+                try {
+                    reader.run();
+                }
+                    catch (MalformedURLException e) {
+                    System.out.println("URL Error");
+                    continue;
+                } catch (IOException e) {
+                    System.out.println("Error");
+                    continue;
+                }
+                finally {
+                    if (reader.getBufferedReader() != null) {
+                        reader.getBufferedReader().close();
+                    }
+
+                }
+            }
+
             //User input wrong command so repeat the menu choices
             else {
                 printInvalidInputMessege();

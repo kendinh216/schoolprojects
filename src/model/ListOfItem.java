@@ -14,6 +14,7 @@ public class ListOfItem {
     public void addNormalItem(Item i) throws TooManyThingsToDoException {
         checkIfNumberOfUndoneTaskGreaterOrEqualToFive();
         addItemToListOfItemsAndUpdateRelationshipWithItem(i);
+
     }
 
     private void checkIfNumberOfUndoneTaskGreaterOrEqualToFive() throws TooManyThingsToDoException {
@@ -41,6 +42,7 @@ public class ListOfItem {
     public void addUrgenItem(Item i) throws TooManyThingsToDoException {
         checkIfNumberOfUndoneTaskGreaterOrEqualToFive();
         addItemToListOfItemsAndUpdateRelationshipWithItem(i);
+
     }
 
 

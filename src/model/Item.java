@@ -66,10 +66,12 @@ public abstract class Item {
             return;
         if (!loi.equals(toDoList)){
             toDoList = loi;
-            if (urgency)
+            if (urgency) {
                 loi.addUrgenItem(this);
-            else
+            }
+            else {
                 loi.addNormalItem(this);
+            }
         }
     }
 
