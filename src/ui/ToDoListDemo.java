@@ -2,8 +2,11 @@ package ui;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.*;
+
 
 /* ToDoListDemo.java requires no other files. */
 public class ToDoListDemo extends JPanel implements ListSelectionListener {
@@ -25,15 +28,22 @@ public class ToDoListDemo extends JPanel implements ListSelectionListener {
 
         //Create the list and put it in a scroll pane.
         list = new JList(listModel);
-        list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         list.setSelectedIndex(0);
         list.addListSelectionListener(this);
-        list.setVisibleRowCount(100);
+        list.setVisibleRowCount(200);
 
         JScrollPane listScrollPane = new JScrollPane(list);
 
         //create addTask button
         JButton addTaskButton = new JButton(addTaskString);
+        try {
+            Image img = ImageIO.read(getClass().getResource("/images/diary.png"));
+            addTaskButton.setIcon(new ImageIcon(img));
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+
         AddTaskListener addTaskListener = new AddTaskListener(addTaskButton);
         addTaskButton.setActionCommand(addTaskString);
         addTaskButton.addActionListener(addTaskListener);
@@ -44,14 +54,26 @@ public class ToDoListDemo extends JPanel implements ListSelectionListener {
         removeTaskButton.setActionCommand(removeTaskString);
         removeTaskButton.addActionListener(new RemoveTaskListener());
         removeTaskButton.setEnabled(false);
+        try {
+            Image img = ImageIO.read(getClass().getResource("/images/bin.png"));
+            removeTaskButton.setIcon(new ImageIcon(img));
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
 
         //create removeAllTask button
         removeAllTaskButton = new JButton(removeAllTaskString);
         removeAllTaskButton.setActionCommand(removeAllTaskString);
         removeAllTaskButton.addActionListener(new RemoveAllTaskListener());
         removeAllTaskButton.setEnabled(false);
+        try {
+            Image img = ImageIO.read(getClass().getResource("/images/bin.png"));
+            removeAllTaskButton.setIcon(new ImageIcon(img));
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
 
-        taskName = new JTextField(15);
+        taskName = new JTextField(25);
         GhostText ghostText = new GhostText(taskName, "Please enter your task here...");
         taskName.addActionListener(addTaskListener);
         taskName.getDocument().addDocumentListener(addTaskListener);
@@ -94,7 +116,8 @@ public class ToDoListDemo extends JPanel implements ListSelectionListener {
             if (size == 0) { //Nobody's left, disable firing.
                 removeTaskButton.setEnabled(false);
 
-            } else { //Select an index.
+            }
+            else { //Select an index.
                 if (index == listModel.getSize()) {
                     //removed item in last position
                     index--;
