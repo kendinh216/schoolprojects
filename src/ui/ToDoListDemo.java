@@ -12,7 +12,9 @@ public class ToDoListDemo extends JPanel implements ListSelectionListener {
 
     private static final String addTaskString = "Add Task";
     private static final String removeTaskString = "Remove Task";
+    private static final String removeAllTaskString = "Remove All Tasks";
     private JButton removeTaskButton;
+    private JButton removeAllTaskButton;
     private JTextField taskName;
 
     public ToDoListDemo() {
@@ -26,18 +28,26 @@ public class ToDoListDemo extends JPanel implements ListSelectionListener {
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         list.setSelectedIndex(0);
         list.addListSelectionListener(this);
-        list.setVisibleRowCount(5);
+        list.setVisibleRowCount(100);
+
         JScrollPane listScrollPane = new JScrollPane(list);
 
+        //create addTask button
         JButton addTaskButton = new JButton(addTaskString);
         AddTaskListener addTaskListener = new AddTaskListener(addTaskButton);
         addTaskButton.setActionCommand(addTaskString);
         addTaskButton.addActionListener(addTaskListener);
         addTaskButton.setEnabled(false);
 
+        //create removeTask button
         removeTaskButton = new JButton(removeTaskString);
         removeTaskButton.setActionCommand(removeTaskString);
         removeTaskButton.addActionListener(new RemoveTaskListener());
+
+        //create removeAllTask button
+        removeAllTaskButton = new JButton(removeAllTaskString);
+        removeAllTaskButton.setActionCommand(removeAllTaskString);
+        removeAllTaskButton.addActionListener(new RemoveAllTaskListener());
 
         taskName = new JTextField(10);
         taskName.addActionListener(addTaskListener);
@@ -50,6 +60,10 @@ public class ToDoListDemo extends JPanel implements ListSelectionListener {
         buttonPane.setLayout(new BoxLayout(buttonPane,
                 BoxLayout.LINE_AXIS));
         buttonPane.add(removeTaskButton);
+        buttonPane.add(Box.createHorizontalStrut(5));
+        buttonPane.add(new JSeparator(SwingConstants.VERTICAL));
+        buttonPane.add(Box.createHorizontalStrut(5));
+        buttonPane.add(removeAllTaskButton);
         buttonPane.add(Box.createHorizontalStrut(5));
         buttonPane.add(new JSeparator(SwingConstants.VERTICAL));
         buttonPane.add(Box.createHorizontalStrut(5));
@@ -83,6 +97,13 @@ public class ToDoListDemo extends JPanel implements ListSelectionListener {
                 list.setSelectedIndex(index);
                 list.ensureIndexIsVisible(index);
             }
+        }
+    }
+
+    class RemoveAllTaskListener implements  ActionListener{
+        public void actionPerformed(ActionEvent e) {
+            listModel.removeAllElements();
+            removeAllTaskButton.setEnabled(false);
         }
     }
 
@@ -177,6 +198,7 @@ public class ToDoListDemo extends JPanel implements ListSelectionListener {
 
             } else {
                 //Selection, enable the fire button.
+                removeAllTaskButton.setEnabled(true);
                 removeTaskButton.setEnabled(true);
             }
         }
