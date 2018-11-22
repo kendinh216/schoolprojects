@@ -49,7 +49,8 @@ public class ToDoListDemo extends JPanel implements ListSelectionListener {
         removeAllTaskButton.setActionCommand(removeAllTaskString);
         removeAllTaskButton.addActionListener(new RemoveAllTaskListener());
 
-        taskName = new JTextField(10);
+        taskName = new JTextField(20);
+        GhostText ghostText = new GhostText(taskName, "Please enter your task here...");
         taskName.addActionListener(addTaskListener);
         taskName.getDocument().addDocumentListener(addTaskListener);
         String name = listModel.getElementAt(
@@ -59,16 +60,19 @@ public class ToDoListDemo extends JPanel implements ListSelectionListener {
         JPanel buttonPane = new JPanel();
         buttonPane.setLayout(new BoxLayout(buttonPane,
                 BoxLayout.LINE_AXIS));
+
+        buttonPane.add(taskName);
+        buttonPane.add(addTaskButton);
+        buttonPane.add(Box.createHorizontalStrut(5));
+        buttonPane.add(new JSeparator(SwingConstants.VERTICAL));
+        buttonPane.add(Box.createHorizontalStrut(5));
+
         buttonPane.add(removeTaskButton);
         buttonPane.add(Box.createHorizontalStrut(5));
         buttonPane.add(new JSeparator(SwingConstants.VERTICAL));
         buttonPane.add(Box.createHorizontalStrut(5));
         buttonPane.add(removeAllTaskButton);
-        buttonPane.add(Box.createHorizontalStrut(5));
-        buttonPane.add(new JSeparator(SwingConstants.VERTICAL));
-        buttonPane.add(Box.createHorizontalStrut(5));
-        buttonPane.add(taskName);
-        buttonPane.add(addTaskButton);
+
         buttonPane.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
 
         add(listScrollPane, BorderLayout.CENTER);
@@ -192,8 +196,9 @@ public class ToDoListDemo extends JPanel implements ListSelectionListener {
     public void valueChanged(ListSelectionEvent e) {
         if (e.getValueIsAdjusting() == false) {
 
-            if (list.getSelectedIndex() == -1) {
+            if (list.getSelectedIndex() == 0) {
                 //No selection, disable fire button.
+                removeAllTaskButton.setEnabled(false);
                 removeTaskButton.setEnabled(false);
 
             } else {
