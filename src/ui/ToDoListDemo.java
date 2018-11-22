@@ -43,18 +43,19 @@ public class ToDoListDemo extends JPanel implements ListSelectionListener {
         removeTaskButton = new JButton(removeTaskString);
         removeTaskButton.setActionCommand(removeTaskString);
         removeTaskButton.addActionListener(new RemoveTaskListener());
+        removeTaskButton.setEnabled(false);
 
         //create removeAllTask button
         removeAllTaskButton = new JButton(removeAllTaskString);
         removeAllTaskButton.setActionCommand(removeAllTaskString);
         removeAllTaskButton.addActionListener(new RemoveAllTaskListener());
+        removeAllTaskButton.setEnabled(false);
 
-        taskName = new JTextField(20);
+        taskName = new JTextField(15);
         GhostText ghostText = new GhostText(taskName, "Please enter your task here...");
         taskName.addActionListener(addTaskListener);
         taskName.getDocument().addDocumentListener(addTaskListener);
-        String name = listModel.getElementAt(
-                list.getSelectedIndex()).toString();
+        //String name = listModel.getElementAt(list.getSelectedIndex()).toString();
 
         //Create a panel that uses BoxLayout.
         JPanel buttonPane = new JPanel();
@@ -84,6 +85,7 @@ public class ToDoListDemo extends JPanel implements ListSelectionListener {
             //This method can be called only if
             //there's a valid selection
             //so go ahead and remove whatever's selected.
+            removeTaskButton.setEnabled(false);
             int index = list.getSelectedIndex();
             listModel.remove(index);
 
@@ -196,7 +198,7 @@ public class ToDoListDemo extends JPanel implements ListSelectionListener {
     public void valueChanged(ListSelectionEvent e) {
         if (e.getValueIsAdjusting() == false) {
 
-            if (list.getSelectedIndex() == 0) {
+            if (list.getSelectedIndex() == -1) {
                 //No selection, disable fire button.
                 removeAllTaskButton.setEnabled(false);
                 removeTaskButton.setEnabled(false);
