@@ -6,6 +6,9 @@ import java.io.File;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.*;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.AudioSystem;
 
 
 /* ToDoListDemo.java requires no other files. */
@@ -100,6 +103,10 @@ public class ToDoListDemo extends JPanel implements ListSelectionListener {
 
         add(listScrollPane, BorderLayout.CENTER);
         add(buttonPane, BorderLayout.PAGE_END);
+
+
+
+
     }
 
     class RemoveTaskListener implements ActionListener {
@@ -126,13 +133,16 @@ public class ToDoListDemo extends JPanel implements ListSelectionListener {
                 list.setSelectedIndex(index);
                 list.ensureIndexIsVisible(index);
             }
+            playSound("E:/CPSC210/projectw1_team536/src/sounds/Alesis-Fusion-Acoustic-Bass-C2.wav");
         }
     }
 
     class RemoveAllTaskListener implements  ActionListener{
         public void actionPerformed(ActionEvent e) {
+            playSound("E:/CPSC210/projectw1_team536/src/sounds/gun sound.wav");
             listModel.removeAllElements();
             removeAllTaskButton.setEnabled(false);
+
         }
     }
 
@@ -148,7 +158,7 @@ public class ToDoListDemo extends JPanel implements ListSelectionListener {
         //Required by ActionListener.
         public void actionPerformed(ActionEvent e) {
             String name = taskName.getText();
-
+            playSound("E:/CPSC210/projectw1_team536/src/sounds/cashier sound.wav");
             //User didn't type in a unique name...
             if (name.equals("") || alreadyInList(name)) {
                 Toolkit.getDefaultToolkit().beep();
@@ -252,6 +262,21 @@ public class ToDoListDemo extends JPanel implements ListSelectionListener {
         //Display the window.
         frame.pack();
         frame.setVisible(true);
+    }
+
+    public void playSound(String soundName){
+        try
+        {
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(soundName).getAbsoluteFile( ));
+            Clip clip = AudioSystem.getClip( );
+            clip.open(audioInputStream);
+            clip.start( );
+        }
+        catch(Exception ex)
+        {
+            System.out.println("Error with playing sound.");
+            ex.printStackTrace( );
+        }
     }
 
     public static void main(String[] args) {
