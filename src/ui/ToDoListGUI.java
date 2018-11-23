@@ -11,8 +11,8 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.AudioSystem;
 
 
-/* ToDoListDemo.java requires no other files. */
-public class ToDoListDemo extends JPanel implements ListSelectionListener {
+/* ToDoListGUI.java requires no other files. */
+public class ToDoListGUI extends JPanel implements ListSelectionListener {
     private JList list;
     private DefaultListModel listModel;
 
@@ -23,7 +23,7 @@ public class ToDoListDemo extends JPanel implements ListSelectionListener {
     private JButton removeAllTaskButton;
     private JTextField taskName;
 
-    public ToDoListDemo() {
+    public ToDoListGUI() {
         super(new BorderLayout());
 
         listModel = new DefaultListModel();
@@ -150,6 +150,7 @@ public class ToDoListDemo extends JPanel implements ListSelectionListener {
     class AddTaskListener implements ActionListener, DocumentListener {
         private boolean alreadyEnabled = false;
         private JButton button;
+        int counter = 0;
 
         public AddTaskListener(JButton button) {
             this.button = button;
@@ -173,8 +174,8 @@ public class ToDoListDemo extends JPanel implements ListSelectionListener {
             } else {           //add after the selected item
                 index++;
             }
-
-            listModel.insertElementAt(taskName.getText(), index);
+            counter ++;
+            listModel.insertElementAt(counter + ". " + taskName.getText(), index);
             //If we just wanted to add to the end, we'd do this:
             //listModel.addElement(taskName.getText());
 
@@ -243,27 +244,6 @@ public class ToDoListDemo extends JPanel implements ListSelectionListener {
             }
         }
     }
-
-    /**
-     * Create the GUI and show it.  For thread safety,
-     * this method should be invoked from the
-     * event-dispatching thread.
-     */
-    private static void createAndShowGUI() {
-        //Create and set up the window.
-        JFrame frame = new JFrame("ToDoListDemo");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        //Create and set up the content pane.
-        JComponent newContentPane = new ToDoListDemo();
-        newContentPane.setOpaque(true); //content panes must be opaque
-        frame.setContentPane(newContentPane);
-
-        //Display the window.
-        frame.pack();
-        frame.setVisible(true);
-    }
-
     public void playSound(String soundName){
         try
         {
@@ -278,6 +258,27 @@ public class ToDoListDemo extends JPanel implements ListSelectionListener {
             ex.printStackTrace( );
         }
     }
+
+    /**
+     * Create the GUI and show it.  For thread safety,
+     * this method should be invoked from the
+     * event-dispatching thread.
+     */
+    private static void createAndShowGUI() {
+        //Create and set up the window.
+        JFrame frame = new JFrame("ToDoListGUI");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        //Create and set up the content pane.
+        JComponent newContentPane = new ToDoListGUI();
+        newContentPane.setOpaque(true); //content panes must be opaque
+        frame.setContentPane(newContentPane);
+
+        //Display the window.
+        frame.pack();
+        frame.setVisible(true);
+    }
+
 
     public static void main(String[] args) {
         //Schedule a job for the event-dispatching thread:
