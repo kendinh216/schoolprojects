@@ -21,11 +21,14 @@ public class ToDoListGUI extends JPanel implements ListSelectionListener {
     private static final String removeTaskString = "Remove Task";
     private static final String removeAllTaskString = "Remove All Tasks";
     private static final String playMusicString = "Play music";
+    private static final String stopMusicString = "Stop music";
     private JButton removeTaskButton;
     private JButton removeAllTaskButton;
     private JButton playMusicButton;
+    private JButton stopMusicButton;
     private JTextField taskName;
     private JLabel theLabel;
+    private Clip clip;
 
 
     public ToDoListGUI() throws IOException {
@@ -134,11 +137,24 @@ public class ToDoListGUI extends JPanel implements ListSelectionListener {
         playMusicButton.addActionListener(new PlayMusicListener());
         playMusicButton.setEnabled(true);
 
+        stopMusicButton = new JButton(stopMusicString);
+        try {
+            Image img = ImageIO.read(getClass().getResource("/images/diary.png"));
+            addTaskButton.setIcon(new ImageIcon(img));
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+
+        stopMusicButton.setActionCommand(stopMusicString);
+        stopMusicButton.addActionListener(new StopMusicListener());
+        stopMusicButton.setEnabled(true);
+
         JPanel rightPanelButtonPane = new JPanel();
         buttonPane.setLayout(new BoxLayout(buttonPane,
                 BoxLayout.LINE_AXIS));
 
         rightPanelButtonPane.add(playMusicButton);
+        rightPanelButtonPane.add(stopMusicButton);
 
         ImageIcon imageIcon = new ImageIcon(new ImageIcon("E:/CPSC210/projectw1_team536/src/images/above-adventure-aerial-air.jpg").getImage().getScaledInstance(550, 400, Image.SCALE_DEFAULT));
         theLabel = new JLabel();
@@ -165,6 +181,16 @@ public class ToDoListGUI extends JPanel implements ListSelectionListener {
         public void actionPerformed(ActionEvent e) {
             playSound("E:/CPSC210/projectw1_team536/src/sounds/Waltz (Brahms) in ochestra.wav");
             playMusicButton.setEnabled(false);
+            stopMusicButton.setEnabled(true);
+        }
+    }
+
+    class StopMusicListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            stopSound();
+            playMusicButton.setEnabled(true);
+            stopMusicButton.setEnabled(false);
+
         }
     }
 
@@ -303,20 +329,24 @@ public class ToDoListGUI extends JPanel implements ListSelectionListener {
             }
         }
     }
-    public void playSound(String soundName){
-        try
-        {
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(soundName).getAbsoluteFile( ));
-            Clip clip = AudioSystem.getClip( );
-            clip.open(audioInputStream);
-            clip.start( );
-        }
-        catch(Exception ex)
-        {
-            System.out.println("Error with playing sound.");
-            ex.printStackTrace( );
+    public void playSound(String soundName) {
+            try {
+                AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(soundName).getAbsoluteFile());
+                clip = AudioSystem.getClip();
+                clip.open(audioInputStream);
+                clip.start();
+            } catch (Exception ex) {
+                System.out.println("Error with playing sound.");
+                ex.printStackTrace();
+            }
+    }
+    public void stopSound() {
+        if (clip != null) {
+            clip.stop();
         }
     }
+
+
 
     /**
      * Create the GUI and show it.  For thread safety,
