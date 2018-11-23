@@ -3,6 +3,7 @@ package ui;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
+import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.*;
@@ -23,8 +24,9 @@ public class ToDoListGUI extends JPanel implements ListSelectionListener {
     private JButton removeAllTaskButton;
     private JTextField taskName;
     private JLabel theLabel;
+    private Icon[] icons;
 
-    public ToDoListGUI() {
+    public ToDoListGUI() throws IOException {
         setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
 
         // LEFT PANEL ToDoList
@@ -117,36 +119,16 @@ public class ToDoListGUI extends JPanel implements ListSelectionListener {
 
 
         //RIGHT PANE showing images
-        String initialText = "<html>\n" +
-                "Color and font test:\n" +
-                "<ul>\n" +
-                "<li><font color=red>red</font>\n" +
-                "<li><font color=blue>blue</font>\n" +
-                "<li><font color=green>green</font>\n" +
-                "<li><font size=-2>small</font>\n" +
-                "<li><font size=+2>large</font>\n" +
-                "<li><i>italic</i>\n" +
-                "<li><b>bold</b>\n" +
-                "</ul>\n";
-
-        theLabel = new JLabel(initialText) {
-            public Dimension getPreferredSize() {
-                return new Dimension(200, 200);
-            }
-            public Dimension getMinimumSize() {
-                return new Dimension(200, 200);
-            }
-            public Dimension getMaximumSize() {
-                return new Dimension(200, 200);
-            }
-        };
+        ImageIcon imageIcon = new ImageIcon(new ImageIcon("E:/CPSC210/projectw1_team536/src/images/above-adventure-aerial-air.jpg").getImage().getScaledInstance(500, 445, Image.SCALE_DEFAULT));
+        theLabel = new JLabel();
+        theLabel.setIcon(imageIcon);
         theLabel.setVerticalAlignment(SwingConstants.CENTER);
         theLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
         JPanel rightPanel = new JPanel();
         rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.PAGE_AXIS));
         rightPanel.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createTitledBorder("A label with HTML"),
+                BorderFactory.createTitledBorder("Play the sound button"),
                 BorderFactory.createEmptyBorder(10,10,10,10)));
         rightPanel.add(theLabel);
 
@@ -313,7 +295,7 @@ public class ToDoListGUI extends JPanel implements ListSelectionListener {
      * this method should be invoked from the
      * event-dispatching thread.
      */
-    private static void createAndShowGUI() {
+    private static void createAndShowGUI() throws IOException {
         //Create and set up the window.
         JFrame frame = new JFrame("ToDoListGUI");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -334,7 +316,11 @@ public class ToDoListGUI extends JPanel implements ListSelectionListener {
         //creating and showing this application's GUI.
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                createAndShowGUI();
+                try {
+                    createAndShowGUI();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
