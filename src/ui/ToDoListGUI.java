@@ -20,11 +20,13 @@ public class ToDoListGUI extends JPanel implements ListSelectionListener {
     private static final String addTaskString = "Add Task";
     private static final String removeTaskString = "Remove Task";
     private static final String removeAllTaskString = "Remove All Tasks";
+    private static final String playMusicString = "Play music";
     private JButton removeTaskButton;
     private JButton removeAllTaskButton;
+    private JButton playMusicButton;
     private JTextField taskName;
     private JLabel theLabel;
-    private Icon[] icons;
+
 
     public ToDoListGUI() throws IOException {
         setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
@@ -119,7 +121,26 @@ public class ToDoListGUI extends JPanel implements ListSelectionListener {
 
 
         //RIGHT PANE showing images
-        ImageIcon imageIcon = new ImageIcon(new ImageIcon("E:/CPSC210/projectw1_team536/src/images/above-adventure-aerial-air.jpg").getImage().getScaledInstance(500, 445, Image.SCALE_DEFAULT));
+        //create addTask button
+        playMusicButton = new JButton(playMusicString);
+        try {
+            Image img = ImageIO.read(getClass().getResource("/images/diary.png"));
+            addTaskButton.setIcon(new ImageIcon(img));
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+
+        playMusicButton.setActionCommand(playMusicString);
+        playMusicButton.addActionListener(new PlayMusicListener());
+        playMusicButton.setEnabled(true);
+
+        JPanel rightPanelButtonPane = new JPanel();
+        buttonPane.setLayout(new BoxLayout(buttonPane,
+                BoxLayout.LINE_AXIS));
+
+        rightPanelButtonPane.add(playMusicButton);
+
+        ImageIcon imageIcon = new ImageIcon(new ImageIcon("E:/CPSC210/projectw1_team536/src/images/above-adventure-aerial-air.jpg").getImage().getScaledInstance(550, 400, Image.SCALE_DEFAULT));
         theLabel = new JLabel();
         theLabel.setIcon(imageIcon);
         theLabel.setVerticalAlignment(SwingConstants.CENTER);
@@ -131,13 +152,20 @@ public class ToDoListGUI extends JPanel implements ListSelectionListener {
                 BorderFactory.createTitledBorder("Play the sound button"),
                 BorderFactory.createEmptyBorder(10,10,10,10)));
         rightPanel.add(theLabel);
+        rightPanel.add(rightPanelButtonPane);
 
         setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-        add(leftPanel);
         add(Box.createRigidArea(new Dimension(10,0)));
         add(rightPanel);
 
 
+    }
+
+    class PlayMusicListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            playSound("E:/CPSC210/projectw1_team536/src/sounds/Waltz (Brahms) in ochestra.wav");
+            playMusicButton.setEnabled(false);
+        }
     }
 
     class RemoveTaskListener implements ActionListener {
