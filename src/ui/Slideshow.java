@@ -48,24 +48,24 @@ public class Slideshow extends JFrame {
         }
     }
 
-    public static void main(String args[]) {
-        EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
-                    ex.printStackTrace();
-                }
-
-                Slideshow slideshow = new Slideshow();
-                slideshow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                slideshow.pack();
-                slideshow.setLocationRelativeTo(null);
-                slideshow.setVisible(true);
-            }
-        });
-    }
+////    public static void main(String args[]) {
+////        EventQueue.invokeLater(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+//                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+//                    ex.printStackTrace();
+//                }
+//
+//                Slideshow slideshow = new Slideshow();
+//                slideshow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//                slideshow.pack();
+//                slideshow.setLocationRelativeTo(null);
+//                slideshow.setVisible(true);
+//            }
+//        });
+//    }
 
     public class ClickListener extends MouseAdapter {
 

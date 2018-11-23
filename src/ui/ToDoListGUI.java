@@ -22,9 +22,10 @@ public class ToDoListGUI extends JPanel implements ListSelectionListener {
     private JButton removeTaskButton;
     private JButton removeAllTaskButton;
     private JTextField taskName;
+    private JLabel theLabel;
 
     public ToDoListGUI() {
-        super(new BorderLayout());
+        setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
 
         // LEFT PANEL ToDoList
         JPanel leftPanel = new JPanel();
@@ -32,7 +33,7 @@ public class ToDoListGUI extends JPanel implements ListSelectionListener {
         leftPanel.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createTitledBorder(
                         "Welcome to Ken's ToDoList Application!"),
-                BorderFactory.createEmptyBorder(10,10,10,10)));
+                BorderFactory.createEmptyBorder(0,10,10,10)));
 
         listModel = new DefaultListModel();
         listModel.addElement("");
@@ -116,7 +117,43 @@ public class ToDoListGUI extends JPanel implements ListSelectionListener {
 
 
         //RIGHT PANE showing images
-        //JPanel rightPanel = new JPanel();
+        String initialText = "<html>\n" +
+                "Color and font test:\n" +
+                "<ul>\n" +
+                "<li><font color=red>red</font>\n" +
+                "<li><font color=blue>blue</font>\n" +
+                "<li><font color=green>green</font>\n" +
+                "<li><font size=-2>small</font>\n" +
+                "<li><font size=+2>large</font>\n" +
+                "<li><i>italic</i>\n" +
+                "<li><b>bold</b>\n" +
+                "</ul>\n";
+
+        theLabel = new JLabel(initialText) {
+            public Dimension getPreferredSize() {
+                return new Dimension(200, 200);
+            }
+            public Dimension getMinimumSize() {
+                return new Dimension(200, 200);
+            }
+            public Dimension getMaximumSize() {
+                return new Dimension(200, 200);
+            }
+        };
+        theLabel.setVerticalAlignment(SwingConstants.CENTER);
+        theLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
+        JPanel rightPanel = new JPanel();
+        rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.PAGE_AXIS));
+        rightPanel.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createTitledBorder("A label with HTML"),
+                BorderFactory.createEmptyBorder(10,10,10,10)));
+        rightPanel.add(theLabel);
+
+        setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+        add(leftPanel);
+        add(Box.createRigidArea(new Dimension(10,0)));
+        add(rightPanel);
 
 
     }
