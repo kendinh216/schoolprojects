@@ -57,8 +57,8 @@ public class ToDoListGUI extends JPanel implements ListSelectionListener {
         //create addTask button
         JButton addTaskButton = new JButton(addTaskString);
         try {
-            Image img = ImageIO.read(getClass().getResource("/images/diary.png"));
-            addTaskButton.setIcon(new ImageIcon(img));
+            ImageIcon addIcon = new ImageIcon(new ImageIcon("E:/CPSC210/projectw1_team536/src/images/diary.png").getImage().getScaledInstance(25, 25,Image.SCALE_DEFAULT));
+            addTaskButton.setIcon(addIcon);
         } catch (Exception ex) {
             System.out.println(ex);
         }
@@ -74,8 +74,8 @@ public class ToDoListGUI extends JPanel implements ListSelectionListener {
         removeTaskButton.addActionListener(new RemoveTaskListener());
         removeTaskButton.setEnabled(false);
         try {
-            Image img = ImageIO.read(getClass().getResource("/images/bin.png"));
-            removeTaskButton.setIcon(new ImageIcon(img));
+            ImageIcon removeIcon = new ImageIcon(new ImageIcon("E:/CPSC210/projectw1_team536/src/images/bin.png").getImage().getScaledInstance(25, 25,Image.SCALE_DEFAULT));
+            removeTaskButton.setIcon(removeIcon);
         } catch (Exception ex) {
             System.out.println(ex);
         }
@@ -86,17 +86,17 @@ public class ToDoListGUI extends JPanel implements ListSelectionListener {
         removeAllTaskButton.addActionListener(new RemoveAllTaskListener());
         removeAllTaskButton.setEnabled(false);
         try {
-            Image img = ImageIO.read(getClass().getResource("/images/bin.png"));
-            removeAllTaskButton.setIcon(new ImageIcon(img));
+            ImageIcon removeIcon = new ImageIcon(new ImageIcon("E:/CPSC210/projectw1_team536/src/images/bin.png").getImage().getScaledInstance(25, 25,Image.SCALE_DEFAULT));
+            removeAllTaskButton.setIcon(removeIcon);
+
         } catch (Exception ex) {
             System.out.println(ex);
         }
 
-        taskName = new JTextField(25);
+        taskName = new JTextField(22);
         GhostText ghostText = new GhostText(taskName, "Please enter your task here...");
         taskName.addActionListener(addTaskListener);
         taskName.getDocument().addDocumentListener(addTaskListener);
-        //String name = listModel.getElementAt(list.getSelectedIndex()).toString();
 
         //Create a panel that uses BoxLayout.
         JPanel buttonPane = new JPanel();
@@ -125,7 +125,8 @@ public class ToDoListGUI extends JPanel implements ListSelectionListener {
 
         //RIGHT PANE showing images
         //PLAY music button
-        playMusicButton = new JButton(playMusicString);
+        playMusicButton = new JButton(playMusicString){};
+        playMusicButton.setPreferredSize(new Dimension(140,40));
         try {
             ImageIcon playIcon = new ImageIcon(new ImageIcon("E:/CPSC210/projectw1_team536/src/images/play-button_318-42541.jpg").getImage().getScaledInstance(25, 25,Image.SCALE_DEFAULT));
             playMusicButton.setIcon(playIcon);
@@ -139,6 +140,7 @@ public class ToDoListGUI extends JPanel implements ListSelectionListener {
 
         //STOP music button
         stopMusicButton = new JButton(stopMusicString);
+        stopMusicButton.setPreferredSize(new Dimension(140,40));
         try {
             ImageIcon stopIcon = new ImageIcon(new ImageIcon("E:/CPSC210/projectw1_team536/src/images/stop.jpg").getImage().getScaledInstance(25, 25,Image.SCALE_DEFAULT));
             stopMusicButton.setIcon(stopIcon);
@@ -157,7 +159,7 @@ public class ToDoListGUI extends JPanel implements ListSelectionListener {
         rightPanelButtonPane.add(playMusicButton);
         rightPanelButtonPane.add(stopMusicButton);
 
-        ImageIcon imageIcon = new ImageIcon(new ImageIcon("E:/CPSC210/projectw1_team536/src/images/above-adventure-aerial-air.jpg").getImage().getScaledInstance(500, 400, Image.SCALE_DEFAULT));
+        ImageIcon imageIcon = new ImageIcon(new ImageIcon("E:/CPSC210/projectw1_team536/src/images/aerial-main-mall-800x253.jpg").getImage().getScaledInstance(900, 400, Image.SCALE_DEFAULT));
         theLabel = new JLabel();
         theLabel.setIcon(imageIcon);
         theLabel.setVerticalAlignment(SwingConstants.CENTER);
@@ -240,6 +242,7 @@ public class ToDoListGUI extends JPanel implements ListSelectionListener {
 
         public AddTaskListener(JButton button) {
             this.button = button;
+
         }
 
         //Required by ActionListener.
