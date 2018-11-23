@@ -124,11 +124,11 @@ public class ToDoListGUI extends JPanel implements ListSelectionListener {
 
 
         //RIGHT PANE showing images
-        //create addTask button
+        //PLAY music button
         playMusicButton = new JButton(playMusicString);
         try {
-            Image img = ImageIO.read(getClass().getResource("/images/diary.png"));
-            addTaskButton.setIcon(new ImageIcon(img));
+            ImageIcon playIcon = new ImageIcon(new ImageIcon("E:/CPSC210/projectw1_team536/src/images/play-button_318-42541.jpg").getImage().getScaledInstance(25, 25,Image.SCALE_DEFAULT));
+            playMusicButton.setIcon(playIcon);
         } catch (Exception ex) {
             System.out.println(ex);
         }
@@ -137,17 +137,18 @@ public class ToDoListGUI extends JPanel implements ListSelectionListener {
         playMusicButton.addActionListener(new PlayMusicListener());
         playMusicButton.setEnabled(true);
 
+        //STOP music button
         stopMusicButton = new JButton(stopMusicString);
         try {
-            Image img = ImageIO.read(getClass().getResource("/images/diary.png"));
-            addTaskButton.setIcon(new ImageIcon(img));
+            ImageIcon stopIcon = new ImageIcon(new ImageIcon("E:/CPSC210/projectw1_team536/src/images/stop.jpg").getImage().getScaledInstance(25, 25,Image.SCALE_DEFAULT));
+            stopMusicButton.setIcon(stopIcon);
         } catch (Exception ex) {
             System.out.println(ex);
         }
 
         stopMusicButton.setActionCommand(stopMusicString);
         stopMusicButton.addActionListener(new StopMusicListener());
-        stopMusicButton.setEnabled(true);
+        stopMusicButton.setEnabled(false);
 
         JPanel rightPanelButtonPane = new JPanel();
         buttonPane.setLayout(new BoxLayout(buttonPane,
@@ -156,7 +157,7 @@ public class ToDoListGUI extends JPanel implements ListSelectionListener {
         rightPanelButtonPane.add(playMusicButton);
         rightPanelButtonPane.add(stopMusicButton);
 
-        ImageIcon imageIcon = new ImageIcon(new ImageIcon("E:/CPSC210/projectw1_team536/src/images/above-adventure-aerial-air.jpg").getImage().getScaledInstance(550, 400, Image.SCALE_DEFAULT));
+        ImageIcon imageIcon = new ImageIcon(new ImageIcon("E:/CPSC210/projectw1_team536/src/images/above-adventure-aerial-air.jpg").getImage().getScaledInstance(500, 400, Image.SCALE_DEFAULT));
         theLabel = new JLabel();
         theLabel.setIcon(imageIcon);
         theLabel.setVerticalAlignment(SwingConstants.CENTER);
