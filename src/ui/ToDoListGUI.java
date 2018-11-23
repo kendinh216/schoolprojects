@@ -192,13 +192,13 @@ public class ToDoListGUI extends JPanel implements ListSelectionListener {
                 list.setSelectedIndex(index);
                 list.ensureIndexIsVisible(index);
             }
-            playSound("E:/CPSC210/projectw1_team536/src/sounds/Alesis-Fusion-Acoustic-Bass-C2.wav");
+            playSound("E:/CPSC210/projectw1_team536/src/sounds/toaster_1.wav");
         }
     }
 
     class RemoveAllTaskListener implements  ActionListener{
         public void actionPerformed(ActionEvent e) {
-            playSound("E:/CPSC210/projectw1_team536/src/sounds/gun sound.wav");
+            playSound("E:/CPSC210/projectw1_team536/src/sounds/stapler_1.wav");
             listModel.removeAllElements();
             removeAllTaskButton.setEnabled(false);
 
