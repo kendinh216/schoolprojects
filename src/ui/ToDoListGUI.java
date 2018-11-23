@@ -26,6 +26,14 @@ public class ToDoListGUI extends JPanel implements ListSelectionListener {
     public ToDoListGUI() {
         super(new BorderLayout());
 
+        // LEFT PANEL ToDoList
+        JPanel leftPanel = new JPanel();
+        leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.PAGE_AXIS));
+        leftPanel.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createTitledBorder(
+                        "Welcome to Ken's ToDoList Application!"),
+                BorderFactory.createEmptyBorder(10,10,10,10)));
+
         listModel = new DefaultListModel();
         listModel.addElement("");
 
@@ -101,10 +109,14 @@ public class ToDoListGUI extends JPanel implements ListSelectionListener {
 
         buttonPane.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
 
-        add(listScrollPane, BorderLayout.CENTER);
-        add(buttonPane, BorderLayout.PAGE_END);
+        leftPanel.add(listScrollPane, BorderLayout.CENTER);
+        leftPanel.add(buttonPane, BorderLayout.PAGE_END);
+
+        add(leftPanel);
 
 
+        //RIGHT PANE showing images
+        //JPanel rightPanel = new JPanel();
 
 
     }
@@ -288,5 +300,7 @@ public class ToDoListGUI extends JPanel implements ListSelectionListener {
                 createAndShowGUI();
             }
         });
+
+
     }
 }
