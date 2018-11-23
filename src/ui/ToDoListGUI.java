@@ -162,20 +162,21 @@ public class ToDoListGUI extends JPanel implements ListSelectionListener {
         ImageIcon imageIcon = new ImageIcon(new ImageIcon("E:/CPSC210/projectw1_team536/src/images/aerial-main-mall-800x253.jpg").getImage().getScaledInstance(900, 400, Image.SCALE_DEFAULT));
         theLabel = new JLabel();
         theLabel.setIcon(imageIcon);
-        theLabel.setVerticalAlignment(SwingConstants.CENTER);
-        theLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        theLabel.setVerticalAlignment(JLabel.CENTER);
+        theLabel.setHorizontalAlignment(JLabel.CENTER);
 
         JPanel rightPanel = new JPanel();
         rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.PAGE_AXIS));
         rightPanel.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createTitledBorder("Play the sound button"),
-                BorderFactory.createEmptyBorder(10,10,10,10)));
+                BorderFactory.createEmptyBorder(0, 10,10,10)));
         rightPanel.add(theLabel);
         rightPanel.add(rightPanelButtonPane);
 
         setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
         add(Box.createRigidArea(new Dimension(10,0)));
         add(rightPanel);
+
 
 
     }
