@@ -38,7 +38,7 @@ public class ToDoListGUI extends JPanel implements ListSelectionListener {
     public ToDoListGUI() throws IOException {
         setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
 
-        // LEFT PANEL ToDoList
+        // Creates Left Panel
         JPanel leftPanel = new JPanel();
         leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.PAGE_AXIS));
         leftPanel.setBorder(BorderFactory.createCompoundBorder(
@@ -49,7 +49,7 @@ public class ToDoListGUI extends JPanel implements ListSelectionListener {
         listModel = new DefaultListModel();
         listModel.addElement("");
 
-        //Create the list and put it in a scroll pane.
+        //Create a list and put it in a scroll pane.
         list = new JList(listModel);
         list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         list.setSelectedIndex(0);
@@ -102,7 +102,7 @@ public class ToDoListGUI extends JPanel implements ListSelectionListener {
         taskName.addActionListener(addTaskListener);
         taskName.getDocument().addDocumentListener(addTaskListener);
 
-        //Create a panel that uses BoxLayout.
+        //Create a button panel
         JPanel buttonPane = new JPanel();
         buttonPane.setLayout(new BoxLayout(buttonPane,
                 BoxLayout.LINE_AXIS));
@@ -117,17 +117,18 @@ public class ToDoListGUI extends JPanel implements ListSelectionListener {
         buttonPane.add(Box.createHorizontalStrut(5));
         buttonPane.add(new JSeparator(SwingConstants.VERTICAL));
         buttonPane.add(Box.createHorizontalStrut(5));
-        buttonPane.add(removeAllTaskButton);
 
+        buttonPane.add(removeAllTaskButton);
         buttonPane.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
 
+        // Add button panel and list panel to the main left panel
         leftPanel.add(listScrollPane, BorderLayout.CENTER);
         leftPanel.add(buttonPane, BorderLayout.PAGE_END);
 
         add(leftPanel);
 
 
-        //RIGHT PANE showing images
+        //Right Panel showing images and play background music
         //PLAY music button
         playMusicButton = new JButton(playMusicString){};
         playMusicButton.setPreferredSize(new Dimension(140,40));
@@ -156,6 +157,7 @@ public class ToDoListGUI extends JPanel implements ListSelectionListener {
         stopMusicButton.addActionListener(new StopMusicListener());
         stopMusicButton.setEnabled(false);
 
+        //Creates right panel button pane
         JPanel rightPanelButtonPane = new JPanel();
         buttonPane.setLayout(new BoxLayout(buttonPane,
                 BoxLayout.LINE_AXIS));
@@ -163,6 +165,7 @@ public class ToDoListGUI extends JPanel implements ListSelectionListener {
         rightPanelButtonPane.add(playMusicButton);
         rightPanelButtonPane.add(stopMusicButton);
 
+        //set image
         ImageIcon imageIcon = new ImageIcon(new ImageIcon("E:/CPSC210/projectw1_team536/src/images/aerial-main-mall-800x253.jpg").getImage().getScaledInstance(900, 400, Image.SCALE_DEFAULT));
         theLabel = new JLabel();
         theLabel.setIcon(imageIcon);
@@ -184,7 +187,7 @@ public class ToDoListGUI extends JPanel implements ListSelectionListener {
 
 
     }
-
+    // Actions to be performed by play music button
     class PlayMusicListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             playSound("E:/CPSC210/projectw1_team536/src/sounds/Waltz (Brahms) in ochestra.wav");
@@ -192,7 +195,7 @@ public class ToDoListGUI extends JPanel implements ListSelectionListener {
             stopMusicButton.setEnabled(true);
         }
     }
-
+    //Actions to be performed by stop music button
     class StopMusicListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             stopSound();
@@ -201,7 +204,7 @@ public class ToDoListGUI extends JPanel implements ListSelectionListener {
 
         }
     }
-
+    //Actions to be performed by remove task button
     class RemoveTaskListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             removeTaskButton.setEnabled(false);
@@ -226,7 +229,7 @@ public class ToDoListGUI extends JPanel implements ListSelectionListener {
             playSound("E:/CPSC210/projectw1_team536/src/sounds/toaster_1.wav");
         }
     }
-
+    //Actions to be performed by remove all tasks button
     class RemoveAllTaskListener implements  ActionListener{
         public void actionPerformed(ActionEvent e) {
             playSound("E:/CPSC210/projectw1_team536/src/sounds/stapler_1.wav");
@@ -235,8 +238,7 @@ public class ToDoListGUI extends JPanel implements ListSelectionListener {
 
         }
     }
-
-
+    // Actions to be performed by add task button
     class AddTaskListener implements ActionListener, DocumentListener {
         private boolean alreadyEnabled = false;
         private JButton button;
@@ -313,7 +315,7 @@ public class ToDoListGUI extends JPanel implements ListSelectionListener {
         }
     }
 
-
+    //Set the states of the buttons when any button is pressed
     public void valueChanged(ListSelectionEvent e) {
         if (e.getValueIsAdjusting() == false) {
 
@@ -329,6 +331,7 @@ public class ToDoListGUI extends JPanel implements ListSelectionListener {
             }
         }
     }
+    // Play music
     public void playSound(String soundName) {
             try {
                 AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(soundName).getAbsoluteFile());
@@ -340,12 +343,12 @@ public class ToDoListGUI extends JPanel implements ListSelectionListener {
                 ex.printStackTrace();
             }
     }
+    // Stop music
     public void stopSound() {
         if (clip != null) {
             clip.stop();
         }
     }
-
 
     private static void createAndShowGUI() throws IOException {
         //Create and set up the window.
@@ -361,8 +364,7 @@ public class ToDoListGUI extends JPanel implements ListSelectionListener {
         frame.pack();
         frame.setVisible(true);
     }
-
-
+    
     public static void main(String[] args) {
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
