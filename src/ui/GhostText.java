@@ -1,3 +1,5 @@
+// Citing from stack over flow answer: https://stackoverflow.com/questions/10506789/how-to-display-faint-gray-ghost-text-in-a-jtextfield
+
 package ui;
 
 import java.awt.Color;

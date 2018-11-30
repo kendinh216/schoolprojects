@@ -1,10 +1,14 @@
+// The frame work of this GUI is based on the ListDemo and ListDialog from Oracle Java Swing examples
+// The code for adding background music is from stackoverflow answer: https://stackoverflow.com/questions/43110050/how-to-add-background-music
+// The code for adding icon images is from stackoverflow answer: https://stackoverflow.com/questions/4801386/how-do-i-add-an-image-to-a-jbutton
+
+
 package ui;
 
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.*;
 import javax.sound.sampled.AudioInputStream;
@@ -12,7 +16,7 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.AudioSystem;
 
 
-/* ToDoListGUI.java requires no other files. */
+
 public class ToDoListGUI extends JPanel implements ListSelectionListener {
     private JList list;
     private DefaultListModel listModel;
@@ -200,9 +204,6 @@ public class ToDoListGUI extends JPanel implements ListSelectionListener {
 
     class RemoveTaskListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            //This method can be called only if
-            //there's a valid selection
-            //so go ahead and remove whatever's selected.
             removeTaskButton.setEnabled(false);
             int index = list.getSelectedIndex();
             listModel.remove(index);
@@ -235,7 +236,7 @@ public class ToDoListGUI extends JPanel implements ListSelectionListener {
         }
     }
 
-    //This listener is shared by the text field and the hire button.
+
     class AddTaskListener implements ActionListener, DocumentListener {
         private boolean alreadyEnabled = false;
         private JButton button;
@@ -246,7 +247,6 @@ public class ToDoListGUI extends JPanel implements ListSelectionListener {
 
         }
 
-        //Required by ActionListener.
         public void actionPerformed(ActionEvent e) {
             String name = taskName.getText();
             playSound("E:/CPSC210/projectw1_team536/src/sounds/cashier sound.wav");
@@ -266,8 +266,6 @@ public class ToDoListGUI extends JPanel implements ListSelectionListener {
             }
             counter ++;
             listModel.insertElementAt(counter + ". " + taskName.getText(), index);
-            //If we just wanted to add to the end, we'd do this:
-            //listModel.addElement(taskName.getText());
 
             //Reset the text field.
             taskName.requestFocusInWindow();
@@ -278,24 +276,21 @@ public class ToDoListGUI extends JPanel implements ListSelectionListener {
             list.ensureIndexIsVisible(index);
         }
 
-        //This method tests for string equality. You could certainly
-        //get more sophisticated about the algorithm.  For example,
-        //you might want to ignore white space and capitalization.
+
         protected boolean alreadyInList(String name) {
             return listModel.contains(name);
         }
 
-        //Required by DocumentListener.
+
         public void insertUpdate(DocumentEvent e) {
             enableButton();
         }
 
-        //Required by DocumentListener.
         public void removeUpdate(DocumentEvent e) {
             handleEmptyTextField(e);
         }
 
-        //Required by DocumentListener.
+
         public void changedUpdate(DocumentEvent e) {
             if (!handleEmptyTextField(e)) {
                 enableButton();
@@ -318,7 +313,7 @@ public class ToDoListGUI extends JPanel implements ListSelectionListener {
         }
     }
 
-    //This method is required by ListSelectionListener.
+
     public void valueChanged(ListSelectionEvent e) {
         if (e.getValueIsAdjusting() == false) {
 
@@ -352,12 +347,6 @@ public class ToDoListGUI extends JPanel implements ListSelectionListener {
     }
 
 
-
-    /**
-     * Create the GUI and show it.  For thread safety,
-     * this method should be invoked from the
-     * event-dispatching thread.
-     */
     private static void createAndShowGUI() throws IOException {
         //Create and set up the window.
         JFrame frame = new JFrame("ToDoListGUI");
@@ -365,7 +354,7 @@ public class ToDoListGUI extends JPanel implements ListSelectionListener {
 
         //Create and set up the content pane.
         JComponent newContentPane = new ToDoListGUI();
-        newContentPane.setOpaque(true); //content panes must be opaque
+        newContentPane.setOpaque(true);
         frame.setContentPane(newContentPane);
 
         //Display the window.
@@ -375,8 +364,6 @@ public class ToDoListGUI extends JPanel implements ListSelectionListener {
 
 
     public static void main(String[] args) {
-        //Schedule a job for the event-dispatching thread:
-        //creating and showing this application's GUI.
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 try {
