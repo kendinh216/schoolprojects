@@ -6,6 +6,7 @@ import model.NormalItem;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -18,4 +19,6 @@ public class TestItem {
         assertEquals(newNormalItem.getItemName(), "UBC");
         assertEquals(newNormalItem.getItemStatusInString(), "NOT DONE");
     }
+
+    
 }
