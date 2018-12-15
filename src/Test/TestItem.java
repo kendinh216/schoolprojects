@@ -17,7 +17,7 @@ public class TestItem {
     public void TestConstructItem() throws ParseException {
         Item newNormalItem = new NormalItem("UBC", false, sdf.parse(duedate), false);
         assertEquals(newNormalItem.getItemName(), "UBC");
-        assertEquals(newNormalItem.getItemStatusInString(), "NOT DONE");
+        assertEquals(newNormalItem.getItemStatusInString(), "NOT YET DONE");
     }
 
     
